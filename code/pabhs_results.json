@@ -1,0 +1,945 @@
+{
+ "seed": 20260925,
+ "n_mc": 20000,
+ "step_ranges_s": {
+  "v_carriage": [
+   0.05,
+   0.2
+  ],
+  "t_move": [
+   1.0,
+   4.0
+  ],
+  "t_align": [
+   4.0,
+   15.0
+  ],
+  "t_engage": [
+   3.0,
+   10.0
+  ],
+  "t_torque": [
+   10.0,
+   40.0
+  ],
+  "t_breakout": [
+   10.0,
+   35.0
+  ],
+  "t_release": [
+   2.0,
+   6.0
+  ],
+  "t_verify": [
+   1.0,
+   3.0
+  ],
+  "rpm_spin": [
+   20.0,
+   60.0
+  ],
+  "t_transfer": [
+   10.0,
+   35.0
+  ],
+  "p_retry": [
+   0.005,
+   0.03
+  ],
+  "p_operator": [
+   0.0005,
+   0.005
+  ],
+  "t_operator": [
+   300.0,
+   1200.0
+  ],
+  "check_passes": [
+   1,
+   3
+  ],
+  "t_head": [
+   900.0,
+   1800.0
+  ],
+  "t_gasket": [
+   900.0,
+   2400.0
+  ],
+  "t_atmos": [
+   120.0,
+   600.0
+  ],
+  "t_leak": [
+   1200.0,
+   2700.0
+  ]
+ },
+ "k_spacing": [
+  2.5,
+  5.0
+ ],
+ "flanges": {
+  "top head": {
+   "n": 32,
+   "d_mm": [
+    48,
+    64
+   ]
+  },
+  "bottom head": {
+   "n": 48,
+   "d_mm": [
+    48,
+    64
+   ]
+  },
+  "feed inlet": {
+   "n": 12,
+   "d_mm": [
+    36,
+    48
+   ]
+  }
+ },
+ "sequences": {
+  "top head": {
+   "star": [
+    0,
+    16,
+    8,
+    24,
+    4,
+    20,
+    12,
+    28,
+    2,
+    18,
+    10,
+    26,
+    6,
+    22,
+    14,
+    30
+   ],
+   "travel_star_perD": 37.6,
+   "travel_circ_perD": 3.04,
+   "travel_star_2runners_perD": 11.09,
+   "D_range_m": [
+    1.22,
+    3.26
+   ]
+  },
+  "bottom head": {
+   "star": [
+    0,
+    24,
+    12,
+    36,
+    8,
+    32,
+    20,
+    44,
+    4,
+    28,
+    16,
+    40,
+    2,
+    26,
+    14,
+    38
+   ],
+   "travel_star_perD": 56.48,
+   "travel_circ_perD": 3.08,
+   "travel_star_2runners_perD": 17.34,
+   "D_range_m": [
+    1.83,
+    4.89
+   ]
+  },
+  "feed inlet": {
+   "star": [
+    0,
+    6,
+    3,
+    9,
+    2,
+    8,
+    5,
+    11,
+    1,
+    7,
+    4,
+    10
+   ],
+   "travel_star_perD": 13.61,
+   "travel_circ_perD": 2.88,
+   "travel_star_2runners_perD": 3.67,
+   "D_range_m": [
+    0.34,
+    0.92
+   ]
+  }
+ },
+ "cycle": {
+  "1 head, parallel flanges": {
+   "bolting_open": {
+    "p05": 1.69,
+    "median": 2.12,
+    "p95": 2.72
+   },
+   "bolting_close": {
+    "p05": 4.25,
+    "median": 5.84,
+    "p95": 7.93
+   },
+   "bolting_total": {
+    "p05": 6.09,
+    "median": 7.96,
+    "p95": 10.51
+   },
+   "full_open": {
+    "p05": 2.14,
+    "median": 2.59,
+    "p95": 3.21
+   },
+   "full_close": {
+    "p05": 5.6,
+    "median": 7.23,
+    "p95": 9.35
+   },
+   "full_total": {
+    "p05": 7.91,
+    "median": 9.81,
+    "p95": 12.41
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 3.78,
+     "median": 4.92,
+     "p95": 6.33
+    },
+    "bottom head": {
+     "p05": 6.09,
+     "median": 7.96,
+     "p95": 10.51
+    },
+    "feed inlet": {
+     "p05": 1.23,
+     "median": 1.6,
+     "p95": 2.05
+    }
+   },
+   "p_bolting_le_2.5h": 0.0,
+   "p_bolting_le_1.5h": 0.0
+  },
+  "1 head, serial flanges": {
+   "bolting_open": {
+    "p05": 3.09,
+    "median": 3.87,
+    "p95": 4.85
+   },
+   "bolting_close": {
+    "p05": 7.72,
+    "median": 10.6,
+    "p95": 14.29
+   },
+   "bolting_total": {
+    "p05": 11.12,
+    "median": 14.49,
+    "p95": 18.79
+   },
+   "full_open": {
+    "p05": 3.9,
+    "median": 4.72,
+    "p95": 5.73
+   },
+   "full_close": {
+    "p05": 10.31,
+    "median": 13.29,
+    "p95": 17.06
+   },
+   "full_total": {
+    "p05": 14.57,
+    "median": 18.02,
+    "p95": 22.43
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 3.78,
+     "median": 4.92,
+     "p95": 6.33
+    },
+    "bottom head": {
+     "p05": 6.09,
+     "median": 7.96,
+     "p95": 10.51
+    },
+    "feed inlet": {
+     "p05": 1.23,
+     "median": 1.6,
+     "p95": 2.05
+    }
+   },
+   "p_bolting_le_2.5h": 0.0,
+   "p_bolting_le_1.5h": 0.0
+  },
+  "1 head, circular passes only": {
+   "bolting_open": {
+    "p05": 1.36,
+    "median": 1.7,
+    "p95": 2.06
+   },
+   "bolting_close": {
+    "p05": 3.24,
+    "median": 4.54,
+    "p95": 6.23
+   },
+   "bolting_total": {
+    "p05": 4.79,
+    "median": 6.26,
+    "p95": 8.06
+   },
+   "full_open": {
+    "p05": 1.81,
+    "median": 2.18,
+    "p95": 2.56
+   },
+   "full_close": {
+    "p05": 4.58,
+    "median": 5.91,
+    "p95": 7.62
+   },
+   "full_total": {
+    "p05": 6.59,
+    "median": 8.11,
+    "p95": 9.94
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 3.19,
+     "median": 4.17,
+     "p95": 5.37
+    },
+    "bottom head": {
+     "p05": 4.79,
+     "median": 6.26,
+     "p95": 8.06
+    },
+    "feed inlet": {
+     "p05": 1.17,
+     "median": 1.53,
+     "p95": 1.98
+    }
+   },
+   "p_bolting_le_2.5h": 0.0,
+   "p_bolting_le_1.5h": 0.0
+  },
+  "2 heads, parallel flanges": {
+   "bolting_open": {
+    "p05": 0.92,
+    "median": 1.16,
+    "p95": 1.43
+   },
+   "bolting_close": {
+    "p05": 2.15,
+    "median": 2.91,
+    "p95": 3.87
+   },
+   "bolting_total": {
+    "p05": 3.16,
+    "median": 4.08,
+    "p95": 5.2
+   },
+   "full_open": {
+    "p05": 1.36,
+    "median": 1.64,
+    "p95": 1.94
+   },
+   "full_close": {
+    "p05": 3.46,
+    "median": 4.29,
+    "p95": 5.3
+   },
+   "full_total": {
+    "p05": 4.94,
+    "median": 5.94,
+    "p95": 7.11
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 2.0,
+     "median": 2.59,
+     "p95": 3.27
+    },
+    "bottom head": {
+     "p05": 3.16,
+     "median": 4.08,
+     "p95": 5.2
+    },
+    "feed inlet": {
+     "p05": 0.68,
+     "median": 0.89,
+     "p95": 1.13
+    }
+   },
+   "p_bolting_le_2.5h": 0.001,
+   "p_bolting_le_1.5h": 0.0
+  },
+  "4 heads, parallel flanges": {
+   "bolting_open": {
+    "p05": 0.54,
+    "median": 0.72,
+    "p95": 0.91
+   },
+   "bolting_close": {
+    "p05": 1.16,
+    "median": 1.58,
+    "p95": 2.09
+   },
+   "bolting_total": {
+    "p05": 1.76,
+    "median": 2.31,
+    "p95": 2.93
+   },
+   "full_open": {
+    "p05": 0.97,
+    "median": 1.2,
+    "p95": 1.43
+   },
+   "full_close": {
+    "p05": 2.43,
+    "median": 2.96,
+    "p95": 3.55
+   },
+   "full_total": {
+    "p05": 3.49,
+    "median": 4.16,
+    "p95": 4.88
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 1.15,
+     "median": 1.51,
+     "p95": 1.93
+    },
+    "bottom head": {
+     "p05": 1.76,
+     "median": 2.31,
+     "p95": 2.93
+    },
+    "feed inlet": {
+     "p05": 0.41,
+     "median": 0.54,
+     "p95": 0.69
+    }
+   },
+   "p_bolting_le_2.5h": 0.703,
+   "p_bolting_le_1.5h": 0.005
+  },
+  "4 heads, 2 star passes": {
+   "bolting_open": {
+    "p05": 0.54,
+    "median": 0.72,
+    "p95": 0.91
+   },
+   "bolting_close": {
+    "p05": 0.98,
+    "median": 1.35,
+    "p95": 1.82
+   },
+   "bolting_total": {
+    "p05": 1.57,
+    "median": 2.08,
+    "p95": 2.66
+   },
+   "full_open": {
+    "p05": 0.97,
+    "median": 1.2,
+    "p95": 1.43
+   },
+   "full_close": {
+    "p05": 2.24,
+    "median": 2.73,
+    "p95": 3.29
+   },
+   "full_total": {
+    "p05": 3.29,
+    "median": 3.93,
+    "p95": 4.62
+   },
+   "per_flange_bolting_h": {
+    "top head": {
+     "p05": 1.03,
+     "median": 1.37,
+     "p95": 1.75
+    },
+    "bottom head": {
+     "p05": 1.57,
+     "median": 2.08,
+     "p95": 2.66
+    },
+    "feed inlet": {
+     "p05": 0.37,
+     "median": 0.49,
+     "p95": 0.63
+    }
+   },
+   "p_bolting_le_2.5h": 0.886,
+   "p_bolting_le_1.5h": 0.029
+  }
+ },
+ "best_case_bolting_h": {
+  "1 head, parallel flanges": 2.96,
+  "1 head, serial flanges": 5.42,
+  "1 head, circular passes only": 2.42,
+  "2 heads, parallel flanges": 1.51,
+  "4 heads, parallel flanges": 0.85,
+  "4 heads, 2 star passes": 0.76
+ },
+ "sensitivity_bolting_total": {
+  "v_carriage": -0.538,
+  "t_torque": 0.431,
+  "check_passes": 0.428,
+  "k_spacing": 0.276,
+  "t_align": 0.233,
+  "t_engage": 0.15,
+  "rpm_spin": -0.144,
+  "t_transfer": 0.138,
+  "d_frac": 0.131,
+  "t_release": 0.089,
+  "p_operator": 0.078,
+  "t_breakout": 0.068,
+  "t_move": 0.067,
+  "t_operator": 0.056,
+  "t_verify": 0.045,
+  "p_retry": -0.002
+ },
+ "sensitivity_bolting_total_4heads": {
+  "t_transfer": 0.542,
+  "check_passes": 0.455,
+  "t_torque": 0.416,
+  "p_operator": 0.284,
+  "t_align": 0.214,
+  "t_operator": 0.201,
+  "t_engage": 0.153,
+  "rpm_spin": -0.149,
+  "v_carriage": -0.132,
+  "t_release": 0.076,
+  "k_spacing": 0.073,
+  "t_breakout": 0.066,
+  "t_move": 0.05,
+  "d_frac": 0.049,
+  "p_retry": 0.042,
+  "t_verify": 0.041
+ },
+ "carousel_share_4heads": 0.26,
+ "admissibility": {
+  "bolt_passes_per_flange": {
+   "top head": 256,
+   "bottom head": 384,
+   "feed inlet": 96
+  },
+  "bolt_passes_total": 736,
+  "budget_s_per_bolt_pass_parallel_2.5h": 23.4,
+  "budget_s_per_bolt_pass_serial_2.5h": 12.2,
+  "budget_s_per_bolt_pass_parallel_1.5h": 14.1,
+  "modelled_median_s_per_bolt_pass_bottom": 74.6
+ },
+ "preload": {
+  "torque_kNm": {
+   "36": {
+    "As_mm2": 817.0,
+    "F_kN": 296.0,
+    "T_K0.16": 1.7,
+    "T_K0.20": 2.13
+   },
+   "42": {
+    "As_mm2": 1121.0,
+    "F_kN": 406.0,
+    "T_K0.16": 2.73,
+    "T_K0.20": 3.41
+   },
+   "48": {
+    "As_mm2": 1473.0,
+    "F_kN": 533.0,
+    "T_K0.16": 4.1,
+    "T_K0.20": 5.12
+   },
+   "56": {
+    "As_mm2": 2030.0,
+    "F_kN": 735.0,
+    "T_K0.16": 6.58,
+    "T_K0.20": 8.23
+   },
+   "64": {
+    "As_mm2": 2676.0,
+    "F_kN": 969.0,
+    "T_K0.16": 9.92,
+    "T_K0.20": 12.4
+   }
+  },
+  "torque_control_grid": [
+   {
+    "cv_K": 0.05,
+    "tool_pm": 0.02,
+    "preload_cv": 0.0517,
+    "frac_outside_10pct": 0.0531
+   },
+   {
+    "cv_K": 0.05,
+    "tool_pm": 0.05,
+    "preload_cv": 0.0583,
+    "frac_outside_10pct": 0.0847
+   },
+   {
+    "cv_K": 0.05,
+    "tool_pm": 0.1,
+    "preload_cv": 0.0768,
+    "frac_outside_10pct": 0.2004
+   },
+   {
+    "cv_K": 0.1,
+    "tool_pm": 0.02,
+    "preload_cv": 0.1037,
+    "frac_outside_10pct": 0.3181
+   },
+   {
+    "cv_K": 0.1,
+    "tool_pm": 0.05,
+    "preload_cv": 0.1073,
+    "frac_outside_10pct": 0.3338
+   },
+   {
+    "cv_K": 0.1,
+    "tool_pm": 0.1,
+    "preload_cv": 0.1185,
+    "frac_outside_10pct": 0.3892
+   },
+   {
+    "cv_K": 0.15,
+    "tool_pm": 0.02,
+    "preload_cv": 0.1626,
+    "frac_outside_10pct": 0.5012
+   },
+   {
+    "cv_K": 0.15,
+    "tool_pm": 0.05,
+    "preload_cv": 0.1654,
+    "frac_outside_10pct": 0.5101
+   },
+   {
+    "cv_K": 0.15,
+    "tool_pm": 0.1,
+    "preload_cv": 0.1722,
+    "frac_outside_10pct": 0.5312
+   },
+   {
+    "cv_K": 0.2,
+    "tool_pm": 0.02,
+    "preload_cv": 0.2376,
+    "frac_outside_10pct": 0.6157
+   },
+   {
+    "cv_K": 0.2,
+    "tool_pm": 0.05,
+    "preload_cv": 0.2375,
+    "frac_outside_10pct": 0.6174
+   },
+   {
+    "cv_K": 0.2,
+    "tool_pm": 0.1,
+    "preload_cv": 0.2839,
+    "frac_outside_10pct": 0.6285
+   }
+  ],
+  "torque_angle": [
+   {
+    "cv_K": 0.1,
+    "cv_theta": 0.03,
+    "flagged_frac": 0.34,
+    "preload_cv_before": 0.104,
+    "preload_cv_after": 0.0503,
+    "outside10_before": 0.3187,
+    "outside10_after": 0.0472
+   },
+   {
+    "cv_K": 0.1,
+    "cv_theta": 0.05,
+    "flagged_frac": 0.373,
+    "preload_cv_before": 0.104,
+    "preload_cv_after": 0.0606,
+    "outside10_before": 0.3176,
+    "outside10_after": 0.0955
+   },
+   {
+    "cv_K": 0.1,
+    "cv_theta": 0.08,
+    "flagged_frac": 0.437,
+    "preload_cv_before": 0.1038,
+    "preload_cv_after": 0.0843,
+    "outside10_before": 0.3175,
+    "outside10_after": 0.2266
+   },
+   {
+    "cv_K": 0.15,
+    "cv_theta": 0.03,
+    "flagged_frac": 0.51,
+    "preload_cv_before": 0.1623,
+    "preload_cv_after": 0.0483,
+    "outside10_before": 0.5019,
+    "outside10_after": 0.0467
+   },
+   {
+    "cv_K": 0.15,
+    "cv_theta": 0.05,
+    "flagged_frac": 0.526,
+    "preload_cv_before": 0.1626,
+    "preload_cv_after": 0.0612,
+    "outside10_before": 0.5021,
+    "outside10_after": 0.102
+   },
+   {
+    "cv_K": 0.15,
+    "cv_theta": 0.08,
+    "flagged_frac": 0.557,
+    "preload_cv_before": 0.1631,
+    "preload_cv_after": 0.0863,
+    "outside10_before": 0.5043,
+    "outside10_after": 0.2419
+   }
+  ]
+ },
+ "manipulator": [
+  {
+   "head_t": 1,
+   "bore_mm_c0.00": 186.0,
+   "bore_mm_c0.50": 132.0,
+   "bore_mm_c0.80": 83.0,
+   "bore_mm_c0.90": 59.0,
+   "bore_mm_c0.95": 42.0,
+   "min_counterbalance": 0.0,
+   "moment_kNm_at_2m": 19.6
+  },
+  {
+   "head_t": 2,
+   "bore_mm_c0.00": 263.0,
+   "bore_mm_c0.50": 186.0,
+   "bore_mm_c0.80": 118.0,
+   "bore_mm_c0.90": 83.0,
+   "bore_mm_c0.95": 59.0,
+   "min_counterbalance": 0.0,
+   "moment_kNm_at_2m": 39.2
+  },
+  {
+   "head_t": 5,
+   "bore_mm_c0.00": 417.0,
+   "bore_mm_c0.50": 295.0,
+   "bore_mm_c0.80": 186.0,
+   "bore_mm_c0.90": 132.0,
+   "bore_mm_c0.95": 93.0,
+   "min_counterbalance": 0.41,
+   "moment_kNm_at_2m": 98.1
+  },
+  {
+   "head_t": 10,
+   "bore_mm_c0.00": 589.0,
+   "bore_mm_c0.50": 417.0,
+   "bore_mm_c0.80": 263.0,
+   "bore_mm_c0.90": 186.0,
+   "bore_mm_c0.95": 132.0,
+   "min_counterbalance": 0.705,
+   "moment_kNm_at_2m": 196.2
+  },
+  {
+   "head_t": 15,
+   "bore_mm_c0.00": 721.0,
+   "bore_mm_c0.50": 510.0,
+   "bore_mm_c0.80": 323.0,
+   "bore_mm_c0.90": 228.0,
+   "bore_mm_c0.95": 161.0,
+   "min_counterbalance": 0.803,
+   "moment_kNm_at_2m": 294.3
+  },
+  {
+   "head_t": 20,
+   "bore_mm_c0.00": 833.0,
+   "bore_mm_c0.50": 589.0,
+   "bore_mm_c0.80": 373.0,
+   "bore_mm_c0.90": 263.0,
+   "bore_mm_c0.95": 186.0,
+   "min_counterbalance": 0.852,
+   "moment_kNm_at_2m": 392.4
+  }
+ ],
+ "fmea": [
+  {
+   "mode": "Out-of-window preload not detected",
+   "cause": "Nut-factor outlier, galled thread",
+   "effect": "Gasket leak at restart",
+   "S": 8,
+   "O": 5,
+   "D": 4,
+   "RPN": 160,
+   "control": "Torque-angle window per bolt; angle-corrected re-torque"
+  },
+  {
+   "mode": "Gas detector fails to register residual hydrocarbons",
+   "cause": "Sensor drift, fouling",
+   "effect": "Bolting starts in flammable atmosphere",
+   "S": 10,
+   "O": 3,
+   "D": 5,
+   "RPN": 150,
+   "control": "Redundant detectors (2oo3 voting), bump test before each cycle"
+  },
+  {
+   "mode": "Thermal damage to tool or sensors",
+   "cause": "Residual hot spots on flange",
+   "effect": "Tool failure, sensor drift",
+   "S": 6,
+   "O": 4,
+   "D": 4,
+   "RPN": 96,
+   "control": "High-temperature rating; surface temperature interlock"
+  },
+  {
+   "mode": "Gasket misplaced by semi-automatic arm",
+   "cause": "Cassette misload, face debris",
+   "effect": "Leak at steam test",
+   "S": 7,
+   "O": 4,
+   "D": 3,
+   "RPN": 84,
+   "control": "Camera confirmation; steam test gate before CLOSED"
+  },
+  {
+   "mode": "Leak test passes with a marginal joint",
+   "cause": "Test pressure/time insufficient",
+   "effect": "Leak in service",
+   "S": 8,
+   "O": 2,
+   "D": 5,
+   "RPN": 80,
+   "control": "Defined hold time and decay criterion; torque-angle record review"
+  },
+  {
+   "mode": "Carousel jam or mis-indexed slot",
+   "cause": "Coke debris, bent stud",
+   "effect": "Wrong bolt returned or stall",
+   "S": 6,
+   "O": 4,
+   "D": 3,
+   "RPN": 72,
+   "control": "Slot presence sensing; bolt ID; stop on mismatch"
+  },
+  {
+   "mode": "Head released with a bolt still engaged",
+   "cause": "Engagement sensor false negative",
+   "effect": "Head/flange damage, dropped load",
+   "S": 10,
+   "O": 2,
+   "D": 3,
+   "RPN": 60,
+   "control": "Carousel count must equal n AND per-station sensor; interlock"
+  },
+  {
+   "mode": "Manipulator loses air pressure under load",
+   "cause": "Supply failure, hose rupture",
+   "effect": "Uncontrolled head motion",
+   "S": 10,
+   "O": 3,
+   "D": 2,
+   "RPN": 60,
+   "control": "Counterbalance carries static load; spring-applied mechanical lock"
+  },
+  {
+   "mode": "Socket fails to engage nut",
+   "cause": "Misalignment, coke fouling of nut",
+   "effect": "Bolt skipped, sequence stall",
+   "S": 5,
+   "O": 6,
+   "D": 2,
+   "RPN": 60,
+   "control": "Laser/contact alignment; engagement proof before torque"
+  },
+  {
+   "mode": "Galled or seized nut on breakout",
+   "cause": "Thermal cycling, corrosion",
+   "effect": "Breakout torque exceeded, stall",
+   "S": 5,
+   "O": 5,
+   "D": 2,
+   "RPN": 50,
+   "control": "Torque limit with alarm; operator review; spare stud set"
+  },
+  {
+   "mode": "Carriage drive failure mid-sequence",
+   "cause": "Motor/gear failure, debris on rail",
+   "effect": "Sequence interrupted mid-pass",
+   "S": 6,
+   "O": 3,
+   "D": 2,
+   "RPN": 36,
+   "control": "Resume-from-bolt state retention; manual procedure retained"
+  },
+  {
+   "mode": "PLC or network fault during tightening",
+   "cause": "Hardware/software fault",
+   "effect": "Partially tightened joint",
+   "S": 7,
+   "O": 2,
+   "D": 2,
+   "RPN": 28,
+   "control": "Safe-state on fault; state retention; ESD independent of PLC"
+  }
+ ],
+ "exposure": {
+  "tasks": [
+   {
+    "task": "Atmosphere check",
+    "hours": 0.1,
+    "a": 1.0
+   },
+   {
+    "task": "Bolt loosening and removal",
+    "hours": 2.12,
+    "a": 1.0
+   },
+   {
+    "task": "Head removal and replacement",
+    "hours": 0.75,
+    "a": 0.5
+   },
+   {
+    "task": "Gasket removal, cleaning, installation",
+    "hours": 0.46,
+    "a": 0.5
+   },
+   {
+    "task": "Bolt installation and tightening",
+    "hours": 5.84,
+    "a": 1.0
+   },
+   {
+    "task": "Leak test",
+    "hours": 0.54,
+    "a": 1.0
+   }
+  ],
+  "coverage": 0.938,
+  "manual_person_hours": [
+   16,
+   36
+  ],
+  "pabhs_person_hours_in_zone": [
+   0.0,
+   0.46
+  ]
+ },
+ "sequences_travel_4heads_perD": {
+  "top head": 2.45,
+  "bottom head": 3.47,
+  "feed inlet": 0.79
+ }
+}

@@ -1,0 +1,456 @@
+{
+ "bibel1992": {
+  "doi": "10.1115/1.2929252",
+  "authors": [
+   "Bibel GD",
+   "Ezell RM"
+  ],
+  "title": "An Improved Flange Bolt-Up Procedure Using Experimentally Determined Elastic Interaction Coefficients",
+  "container": "Journal of Pressure Vessel Technology",
+  "year": 1992,
+  "volume": "114",
+  "issue": "4",
+  "page": "439-443",
+  "type": "journal-article",
+  "publisher": "ASME International",
+  "event": ""
+ },
+ "zhu2018": {
+  "doi": "10.1115/1.4040421",
+  "authors": [
+   "Zhu L",
+   "Bouzid AH",
+   "Hong J",
+   "Zhang Z"
+  ],
+  "title": "Elastic Interaction in Bolted Flange Joints: An Analytical Model to Predict and Optimize Bolt Load",
+  "container": "Journal of Pressure Vessel Technology",
+  "year": 2018,
+  "volume": "140",
+  "issue": "4",
+  "page": "041202",
+  "type": "journal-article",
+  "publisher": "ASME International",
+  "event": ""
+ },
+ "zhu2019": {
+  "doi": "10.1115/pvp2019-93062",
+  "authors": [
+   "Zhu L",
+   "Bouzid AH",
+   "Hong J"
+  ],
+  "title": "A Novel Methodology to Optimize the Tightening Sequence in Bolted Flange Joints",
+  "container": "Volume 2: Computer Technology and Bolted Joints",
+  "year": 2019,
+  "volume": null,
+  "issue": null,
+  "page": "V002T02A001",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2019 Pressure Vessels & Piping Conference"
+ },
+ "brown2010": {
+  "doi": "10.1115/pvp2010-25772",
+  "authors": [
+   "Brown W",
+   "Waterland J",
+   "Lay D"
+  ],
+  "title": "Background on the New ASME PCC-1:2010 Appendix F “Alternatives to Legacy Tightening Sequence/Pattern”",
+  "container": "ASME 2010 Pressure Vessels and Piping Conference: Volume 3",
+  "year": 2010,
+  "volume": null,
+  "issue": null,
+  "page": "99-105",
+  "type": "proceedings-article",
+  "publisher": "ASMEDC",
+  "event": "ASME 2010 Pressure Vessels and Piping Division/K-PVP Conference"
+ },
+ "kumakura2003": {
+  "doi": "10.1115/pvp2003-1867",
+  "authors": [
+   "Kumakura S",
+   "Saito K"
+  ],
+  "title": "Tightening Sequence for Bolted Flange Joint Assembly",
+  "container": "Analysis of Bolted Joints",
+  "year": 2003,
+  "volume": null,
+  "issue": null,
+  "page": "9-16",
+  "type": "proceedings-article",
+  "publisher": "ASMEDC",
+  "event": "ASME 2003 Pressure Vessels and Piping Conference"
+ },
+ "nassar2007speed": {
+  "doi": "10.1115/1.2749290",
+  "authors": [
+   "Nassar SA",
+   "Ganeshmurthy S",
+   "Ranganathan RM",
+   "Barber GC"
+  ],
+  "title": "Effect of Tightening Speed on the Torque-Tension and Wear Pattern in Bolted Connections",
+  "container": "Journal of Pressure Vessel Technology",
+  "year": 2007,
+  "volume": "129",
+  "issue": "3",
+  "page": "426-440",
+  "type": "journal-article",
+  "publisher": "ASME International",
+  "event": ""
+ },
+ "nassar2007angle": {
+  "doi": "10.1115/1.2821388",
+  "authors": [
+   "Nassar SA",
+   "Yang X"
+  ],
+  "title": "Torque-Angle Formulation of Threaded Fastener Tightening",
+  "container": "Journal of Mechanical Design",
+  "year": 2008,
+  "volume": "130",
+  "issue": "2",
+  "page": "024501",
+  "type": "journal-article",
+  "publisher": "ASME International",
+  "event": ""
+ },
+ "omiya2016": {
+  "doi": "10.1115/pvp2016-63720",
+  "authors": [
+   "Omiya Y",
+   "Fujii M"
+  ],
+  "title": "Correlation on Scatter Between Torque Coefficient and Bolt Preload in Pipe Flange Connection",
+  "container": "Volume 2: Computer Technology and Bolted Joints",
+  "year": 2016,
+  "volume": null,
+  "issue": null,
+  "page": "V002T02A002",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2016 Pressure Vessels and Piping Conference"
+ },
+ "sawa2003": {
+  "doi": "10.1115/pvp2003-1875",
+  "authors": [
+   "Sawa T",
+   "Matsumoto M",
+   "Nagata S"
+  ],
+  "title": "Effects of Scatter in Bolt Preload of Pipe Flange Connections With Gaskets on Sealing Performance",
+  "container": "Analysis of Bolted Joints",
+  "year": 2003,
+  "volume": null,
+  "issue": null,
+  "page": null,
+  "type": "proceedings-article",
+  "publisher": "ASMEDC",
+  "event": "ASME 2003 Pressure Vessels and Piping Conference"
+ },
+ "abid2013": {
+  "doi": "10.1115/pvp2013-97863",
+  "authors": [
+   "Abid M",
+   "Khan YM",
+   "Nash DH"
+  ],
+  "title": "Assembly of Gasketed Bolted Flange Joints Using Torque Control of Preload Method: FEA Approach",
+  "container": "Volume 3: Design and Analysis",
+  "year": 2013,
+  "volume": null,
+  "issue": null,
+  "page": "V003T03A028",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2013 Pressure Vessels and Piping Conference"
+ },
+ "persson2021": {
+  "doi": "10.4271/2021-01-5073",
+  "authors": [
+   "Persson EV",
+   "Kumar M",
+   "Friberg C",
+   "Dressler N"
+  ],
+  "title": "Clamp Force Accuracy in Threaded Fastener Joints Using Different Torque Control Tightening Strategies",
+  "container": "SAE Technical Paper Series",
+  "year": 2021,
+  "volume": "1",
+  "issue": null,
+  "page": "2021-01-5073",
+  "type": "proceedings-article",
+  "publisher": "SAE International",
+  "event": "Automotive Technical Papers"
+ },
+ "ma2023": {
+  "doi": "10.1115/pvp2023-107648",
+  "authors": [
+   "Ma X",
+   "Xie Y",
+   "Ge Z"
+  ],
+  "title": "Identification of Typical Damage Mechanism of Coke Drum in Delayed Coking Unit",
+  "container": "Volume 1: Codes & Standards",
+  "year": 2023,
+  "volume": null,
+  "issue": null,
+  "page": "V001T01A069",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2023 Pressure Vessels & Piping Conference"
+ },
+ "berry2019": {
+  "doi": "10.1115/pvp2019-93136",
+  "authors": [
+   "Berry A",
+   "Brown W",
+   "Seijas A",
+   "Cook S"
+  ],
+  "title": "Coke Drum Bottom Head Flange Design Optimisation",
+  "container": "Volume 3: Design and Analysis",
+  "year": 2019,
+  "volume": null,
+  "issue": null,
+  "page": "V003T03A002",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2019 Pressure Vessels & Piping Conference"
+ },
+ "horstmeyer2025": {
+  "doi": "10.1115/pvp2025-153394",
+  "authors": [
+   "Horstmeyer M",
+   "Corcoran A",
+   "Seijas A",
+   "Berry A",
+   "Brown W"
+  ],
+  "title": "Coke Drum Bottom Head Flange Distortion, Root Cause and Solutions",
+  "container": "Volume 3: Design & Analysis",
+  "year": 2025,
+  "volume": null,
+  "issue": null,
+  "page": "V003T03A074",
+  "type": "proceedings-article",
+  "publisher": "American Society of Mechanical Engineers",
+  "event": "ASME 2025 Pressure Vessels & Piping Conference"
+ },
+ "vakil2012": {
+  "doi": "10.1016/j.jlp.2011.12.002",
+  "authors": [
+   "Vakilalroayaei H",
+   "Biglari M",
+   "Elkamel A",
+   "Lohi A"
+  ],
+  "title": "Dynamic behavior of coke drum process safety valves during blocked outlet condition in the refinery delayed coking unit",
+  "container": "Journal of Loss Prevention in the Process Industries",
+  "year": 2012,
+  "volume": "25",
+  "issue": "2",
+  "page": "336-343",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ },
+ "nozu2018": {
+  "doi": "10.1109/aim.2018.8452338",
+  "authors": [
+   "Nozu K",
+   "Shimonomura K"
+  ],
+  "title": "Robotic bolt insertion and tightening based on in-hand object localization and force sensing",
+  "container": "2018 IEEE/ASME International Conference on Advanced Intelligent Mechatronics (AIM)",
+  "year": 2018,
+  "volume": null,
+  "issue": null,
+  "page": "310-315",
+  "type": "proceedings-article",
+  "publisher": "IEEE",
+  "event": "2018 IEEE/ASME International Conference on Advanced Intelligent Mechatronics (AIM)"
+ },
+ "yibang2023": {
+  "doi": "10.1007/s00170-023-11597-6",
+  "authors": [
+   "Yibang Z",
+   "Xiaoyong W",
+   "Lanzhu Z"
+  ],
+  "title": "Visual identification and pose estimation algorithms of nut tightening robot system",
+  "container": "The International Journal of Advanced Manufacturing Technology",
+  "year": 2023,
+  "volume": "127",
+  "issue": "11-12",
+  "page": "5307-5326",
+  "type": "journal-article",
+  "publisher": "Springer Science and Business Media LLC",
+  "event": ""
+ },
+ "ali2018": {
+  "doi": "10.1007/s00170-018-3133-0",
+  "authors": [
+   "Ali MAH",
+   "Alshameri MA"
+  ],
+  "title": "An intelligent adjustable spanner for automated engagement with multi-diameter bolts/nuts during tightening/loosening process using vision system and fuzzy logic",
+  "container": "The International Journal of Advanced Manufacturing Technology",
+  "year": 2019,
+  "volume": "101",
+  "issue": "9-12",
+  "page": "2795-2813",
+  "type": "journal-article",
+  "publisher": "Springer Science and Business Media LLC",
+  "event": ""
+ },
+ "martinez2020": {
+  "doi": "10.1007/s00170-020-05695-y",
+  "authors": [
+   "Martinez P",
+   "Al-Hussein M",
+   "Ahmad R"
+  ],
+  "title": "Intelligent vision-based online inspection system of screw-fastening operations in light-gauge steel frame manufacturing",
+  "container": "The International Journal of Advanced Manufacturing Technology",
+  "year": 2020,
+  "volume": "109",
+  "issue": "3-4",
+  "page": "645-657",
+  "type": "journal-article",
+  "publisher": "Springer Science and Business Media LLC",
+  "event": ""
+ },
+ "shukla2016a": {
+  "doi": "10.1016/j.robot.2015.09.012",
+  "authors": [
+   "Shukla A",
+   "Karki H"
+  ],
+  "title": "Application of robotics in onshore oil and gas industry—A review Part I",
+  "container": "Robotics and Autonomous Systems",
+  "year": 2016,
+  "volume": "75",
+  "issue": null,
+  "page": "490-507",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ },
+ "shukla2016b": {
+  "doi": "10.1016/j.robot.2015.09.013",
+  "authors": [
+   "Shukla A",
+   "Karki H"
+  ],
+  "title": "Application of robotics in offshore oil and gas industry— A review Part II",
+  "container": "Robotics and Autonomous Systems",
+  "year": 2016,
+  "volume": "75",
+  "issue": null,
+  "page": "508-524",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ },
+ "arakelian2016": {
+  "doi": "10.1080/01691864.2015.1090334",
+  "authors": [
+   "Arakelian V"
+  ],
+  "title": "Gravity compensation in robotics",
+  "container": "Advanced Robotics",
+  "year": 2016,
+  "volume": "30",
+  "issue": "2",
+  "page": "79-96",
+  "type": "journal-article",
+  "publisher": "Informa UK Limited",
+  "event": ""
+ },
+ "singh2023": {
+  "doi": "10.1007/978-981-99-2516-2",
+  "authors": [
+   "Kumar Singh A"
+  ],
+  "title": "Explosion-Proof Equipment in Hazardous Area",
+  "container": "",
+  "year": 2023,
+  "volume": null,
+  "issue": null,
+  "page": null,
+  "type": "book",
+  "publisher": "Springer Nature Singapore",
+  "event": ""
+ },
+ "ovatman2016": {
+  "doi": "10.1007/s10270-014-0448-7",
+  "authors": [
+   "Ovatman T",
+   "Aral A",
+   "Polat D",
+   "Ünver AO"
+  ],
+  "title": "An overview of model checking practices on verification of PLC software",
+  "container": "Software & Systems Modeling",
+  "year": 2016,
+  "volume": "15",
+  "issue": "4",
+  "page": "937-960",
+  "type": "journal-article",
+  "publisher": "Springer Science and Business Media LLC",
+  "event": ""
+ },
+ "liu2013": {
+  "doi": "10.1016/j.eswa.2012.08.010",
+  "authors": [
+   "Liu HC",
+   "Liu L",
+   "Liu N"
+  ],
+  "title": "Risk evaluation approaches in failure mode and effects analysis: A literature review",
+  "container": "Expert Systems with Applications",
+  "year": 2013,
+  "volume": "40",
+  "issue": "2",
+  "page": "828-838",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ },
+ "negahban2014": {
+  "doi": "10.1016/j.jmsy.2013.12.007",
+  "authors": [
+   "Negahban A",
+   "Smith JS"
+  ],
+  "title": "Simulation for manufacturing system design and operation: Literature review and analysis",
+  "container": "Journal of Manufacturing Systems",
+  "year": 2014,
+  "volume": "33",
+  "issue": "2",
+  "page": "241-261",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ },
+ "zhuang2021": {
+  "doi": "10.1016/j.jmsy.2020.05.011",
+  "authors": [
+   "Zhuang C",
+   "Gong J",
+   "Liu J"
+  ],
+  "title": "Digital twin-based assembly data management and process traceability for complex products",
+  "container": "Journal of Manufacturing Systems",
+  "year": 2021,
+  "volume": "58",
+  "issue": null,
+  "page": "118-131",
+  "type": "journal-article",
+  "publisher": "Elsevier BV",
+  "event": ""
+ }
+}
