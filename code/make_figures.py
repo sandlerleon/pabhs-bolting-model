@@ -235,7 +235,7 @@ axs[1].legend(frameon=False, fontsize=6.8)
 for a in axs:
     a.spines[["top", "right"]].set_visible(False)
 fig.tight_layout()
-save(fig, "figure7_preload")
+save(fig, "figure8_preload")
 
 # ------------------------------------------------------------------ Figure 7
 fig, ax = plt.subplots(figsize=(6.2, 3.6))
@@ -252,7 +252,7 @@ ax.set_title("Pneumatic lift is feasible only with counterbalance", loc="left", 
 ax.legend(frameon=False, fontsize=7)
 ax.set_ylim(0, 900)
 ax.spines[["top", "right"]].set_visible(False)
-save(fig, "figure8_manipulator")
+save(fig, "figure9_manipulator")
 
 # ------------------------------------------------------------------ Figure 8
 F = R["fmea"]
@@ -269,7 +269,7 @@ ax.set_xlabel("risk priority number, S × O × D")
 ax.set_title("Design FMEA (author-scored; red: S ≥ 9, orange: S 7–8)", loc="left", fontweight="bold")
 ax.set_xlim(0, max(rpn) * 1.35)
 ax.spines[["top", "right"]].set_visible(False)
-save(fig, "figure9_fmea")
+save(fig, "figure10_fmea")
 
 # ------------------------------------------------------------------ Figure 6
 O = np.load("_mc_opt.npy") / 3600.0          # [bolting|complete, config, sample]
@@ -297,3 +297,28 @@ axs[0].set_ylim(0, 13.5)
 axs[1].text(6.45, 2.62, "2.5 h", color=GREEN, fontsize=7, ha="right")
 fig.tight_layout()
 save(fig, "figure6_optimisation")
+
+# ------------------------------------------------------------------ Figure 7
+FMAP = R["feasibility_map"]
+fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.4))
+heads, chans = [1, 2, 4], [1, 2, 4]
+for ax, sp, title in ((axs[0], 3, "A   Legacy procedure (3 star passes)"),
+                      (axs[1], 2, "B   Two star passes (needs qualification)")):
+    Z = np.array([[FMAP["%d,%d,%d" % (sp, h, c)]["p_le_2.5h"] for c in chans] for h in heads])
+    im = ax.imshow(Z, cmap="RdYlGn", vmin=0, vmax=1, origin="lower", aspect="auto")
+    for i, h in enumerate(heads):
+        for j, c in enumerate(chans):
+            v = FMAP["%d,%d,%d" % (sp, h, c)]
+            ax.text(j, i, "%.2f\n%.2f h" % (v["p_le_2.5h"], v["median"]), ha="center", va="center",
+                    fontsize=7.2, color="black")
+            if v["p_le_2.5h"] >= 0.9:
+                ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1, 1, fill=False, ec="black", lw=1.6))
+    ax.set_xticks(range(3)); ax.set_xticklabels(chans)
+    ax.set_yticks(range(3)); ax.set_yticklabels(heads)
+    ax.set_xlabel("bolt-transfer channels per flange")
+    ax.set_ylabel("torque heads per flange")
+    ax.set_title(title, loc="left", fontweight="bold", fontsize=8.6)
+cb = fig.colorbar(im, ax=axs, fraction=0.03, pad=0.02)
+cb.set_label("P(bolting ≤ 2.5 h)")
+fig.text(0.01, -0.03, "Outlined cells: P ≥ 0.90.", fontsize=7, color="#444444")
+save(fig, "figure7_feasibility")

@@ -210,6 +210,40 @@ def sample():
     return s
 
 
+# Inputs a pessimistic reviewer would expect to move together: a large, badly aligned
+# bolt takes longer to align, engage and torque, and is likelier to need a retry or review.
+CORRELATED = ["t_align", "t_engage", "t_torque", "p_retry", "p_operator", "d_frac"]
+
+
+def sample_alt(dist, seed, rho=0.6):
+    """Alternative uncertainty models for the robustness check.
+    'triangular': same ranges, mode at the midpoint (engineering nominal).
+    'correlated': uniform margins, Gaussian copula with correlation rho among CORRELATED."""
+    from scipy.stats import norm
+    r = np.random.default_rng(seed)
+    keys = list(STEP) + ["k_spacing", "d_frac"]
+    rngs = {k: (STEP[k] if k in STEP else (K_SPACING if k == "k_spacing" else (0.0, 1.0))) for k in keys}
+    u = r.uniform(size=(N_MC, len(keys)))
+    if dist == "correlated":
+        idx = [keys.index(k) for k in CORRELATED]
+        C = np.full((len(idx), len(idx)), rho)
+        np.fill_diagonal(C, 1.0)
+        z = r.standard_normal((N_MC, len(idx))) @ np.linalg.cholesky(C).T
+        u[:, idx] = norm.cdf(z)
+    s = {}
+    for j, k in enumerate(keys):
+        lo, hi = rngs[k]
+        x = u[:, j]
+        if dist == "triangular":
+            # inverse CDF of the symmetric triangular distribution on [0, 1]
+            x = np.where(x < 0.5, np.sqrt(x / 2), 1 - np.sqrt((1 - x) / 2))
+        if k == "check_passes":
+            s[k] = np.minimum(lo + np.floor(x * (hi - lo + 1)), hi)
+        else:
+            s[k] = lo + x * (hi - lo)
+    return s
+
+
 def flange_times(f, s, runners=1, pattern="legacy", star_passes=TIGHTEN_STAR_PASSES,
                  channels=1):
     """Opening and closing bolting time (s) for one flange, vectorised over samples.
@@ -493,6 +527,46 @@ def main():
         "floor_non_bolting_min_h": round((STEP["t_atmos"][0] + 2 * STEP["t_head"][0] +
                                           STEP["t_gasket"][0] + STEP["t_leak"][0]) / 3600, 2),
         "non_bolting_median_h": round(float(np.median(non_bolt)) / 3600, 2)}
+    # ---- robustness of the architectural ranking to the uncertainty model
+    RB = {"1 head": dict(runners=1), "2 heads": dict(runners=2),
+          "A 4 heads": dict(runners=4), "B + 4 channels": dict(runners=4, channels=4),
+          "C + 2 star passes": dict(runners=4, channels=4, star_passes=2)}
+    res["robustness"] = {}
+    for dname, ss in (("uniform, independent", s), ("triangular, independent", sample_alt("triangular", SEED + 11)),
+                      ("uniform, correlated (rho = 0.6)", sample_alt("correlated", SEED + 12))):
+        out = {}
+        tb = {}
+        for cname, kw in RB.items():
+            c = cycle(ss, **kw)["bolting_total"]
+            tb[cname] = c
+            out[cname] = {"median": round(float(np.median(c)) / 3600, 2),
+                          "p95": round(float(np.percentile(c, 95)) / 3600, 2),
+                          "p_le_2.5h": round(float(np.mean(c <= 9000)), 3)}
+        order = (tb["1 head"] > tb["2 heads"]) & (tb["2 heads"] > tb["A 4 heads"]) & \
+                (tb["A 4 heads"] > tb["B + 4 channels"])
+        out["ranking_holds_fraction"] = round(float(order.mean()), 4)
+        res["robustness"][dname] = out
+
+    # ---- design feasibility map: heads x transfer channels x star passes
+    res["feasibility_map"] = {}
+    for sp in (3, 2):
+        for r_ in (1, 2, 4):
+            for ch in (1, 2, 4):
+                c = cycle(s, runners=r_, channels=ch, star_passes=sp)["bolting_total"]
+                res["feasibility_map"]["%d,%d,%d" % (sp, r_, ch)] = {
+                    "median": round(float(np.median(c)) / 3600, 2),
+                    "p_le_2.5h": round(float(np.mean(c <= 9000)), 3)}
+
+    # ---- servicing envelope: what the non-bolting steps must total for T_complete <= 2.5 h
+    env = {}
+    for cname in ("B + 4 transfer channels", "C + 2 star passes"):
+        tb = res["optimisation"][cname]["bolting_total"]["median"]
+        env[cname] = {"bolting_median_h": tb, "servicing_budget_h": round(2.5 - tb, 2),
+                      "servicing_budget_min": round((2.5 - tb) * 60, 0)}
+    env["assumed_min_h"] = res["optimisation"]["E_composition_h"]["floor_non_bolting_min_h"]
+    env["assumed_median_h"] = res["optimisation"]["E_composition_h"]["non_bolting_median_h"]
+    res["servicing_envelope"] = env
+
     # sequence optimisation detail: travel per star pass (per unit bolt-circle diameter)
     res["sequence_optimisation"] = {}
     for fname, f in FLANGES.items():

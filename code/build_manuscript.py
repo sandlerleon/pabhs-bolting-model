@@ -205,24 +205,24 @@ ABSTRACT = (
     "an automated architecture for such closures: orbital pneumatic torque runners "
     "on the flange, a bolt-management carousel, a counterbalanced head manipulator and an "
     "interlocking sequence controller, applied to a 92-bolt, three-flange delayed-coking drum. "
-    "A Monte Carlo cycle-time model built on the actual star-pattern rail travel shows that "
-    "one torque head per flange needs a median %.1f h to unbolt and re-bolt the drum and "
-    "cannot reach a 2.5 h target under any assumed step times. Removing bottlenecks in turn "
-    "gives %.1f h with four synchronised heads, %.1f h with a bolt-transfer channel per head "
-    "and %.1f h with one fewer star pass; an exactly optimised tool path adds little, because "
-    "the travel is fixed by the opposite-bolt rule. The complete operation, including head "
-    "handling, gasket work and leak testing, remains %.1f h. "
-    "Specifying \u00b12%% torque accuracy barely affects preload scatter, which nut-factor "
-    "variation dominates; a torque\u2013angle check with re-torque cuts the share of bolts "
-    "outside \u00b110%% of target from %.0f%% to %.0f%%. Exhaustive verification of the "
-    "interlock logic finds no safety violation, but the interlocks as first specified "
-    "deadlock after a mid-sequence emergency stop; a resume rule removes every deadlock. "
-    "Pneumatic head handling needs a counterbalance carrying most of the load. All results "
-    "are predictions; a validation programme with acceptance criteria is given."
+    "A Monte Carlo model built on the actual star-pattern tool travel shows that one torque "
+    "head per flange needs a median %.1f h to unbolt and re-bolt the drum and, within the "
+    "investigated parameter bounds, cannot meet a 2.5 h target. Removing bottlenecks in turn "
+    "gives %.1f h with four synchronised heads and %.1f h with a bolt-transfer channel per "
+    "head, the recommended machine-only configuration, which meets 2.5 h in %.0f%% of "
+    "samples; one fewer star pass would give %.1f h but requires qualification. This ranking "
+    "holds in every sample under uniform, triangular and correlated input models. An exactly "
+    "optimised tool path adds little, and the complete operation remains about %.1f h, "
+    "governed by head handling and leak testing. Specifying \u00b12%% torque accuracy barely "
+    "affects preload scatter; under an assumed 3%% angle-based preload-estimate uncertainty, "
+    "torque\u2013angle re-torque cuts bolts outside \u00b110%% of target from %.0f%% to "
+    "%.0f%%. Exhaustive verification found no safety violation but exposed deadlocks after "
+    "interrupted sequences, which a resume rule removed. All results are predictions; an "
+    "experimental falsification plan is given."
     % (b1["bolting_total"]["median"], OA["bolting_total"]["median"],
-       OB["bolting_total"]["median"], OC["bolting_total"]["median"],
-       OE["full_total"]["median"], 100 * ta[(0.1, 0.03)]["outside10_before"],
-       100 * ta[(0.1, 0.03)]["outside10_after"]))
+       OB["bolting_total"]["median"], 100 * OB["p_bolting_le_2.5h"],
+       OC["bolting_total"]["median"], OE["full_total"]["median"],
+       100 * ta[(0.1, 0.03)]["outside10_before"], 100 * ta[(0.1, 0.03)]["outside10_after"]))
 Pp(ABSTRACT, indent=False)
 Pp("Keywords: automated bolting; bolted flange joint; torque\u2013angle control; Monte Carlo "
    "simulation; interlock verification; hazardous-area automation", indent=False, size=10)
@@ -265,7 +265,9 @@ Pp("The contributions are: (i) a cycle-time model for automated multi-pass flang
    "target; (iii) a throughput-optimisation study that removes the architecture's bottlenecks "
    "one at a time \u2014 torque heads, bolt-transfer channels, tightening passes, an exactly "
    "optimised tool path under a load-spreading constraint, and pipelined servicing \u2014 and "
-   "reports bolting and complete-operation times separately; (iv) a preload analysis "
+   "reports bolting and complete-operation times separately, with a robustness check against "
+   "the assumed input distributions, a design feasibility map and a servicing-time envelope "
+   "for the complete operation; (iv) a preload analysis "
    "separating the contributions of tool accuracy, nut-factor scatter and torque\u2013angle "
    "verification; (v) exhaustive verification of the sequence and interlock logic, including "
    "mutation tests and a liveness check that exposes a deadlock in the logic as first "
@@ -501,7 +503,13 @@ Pp("All inputs in Table 2, the spacing factor k and the position of each bolt si
    "its range, bounds what each configuration could achieve. A second study then removes the "
    "bottlenecks of the four-head design one at a time, on the same samples: (A) four heads "
    "and a single carousel; (B) one transfer channel per head; (C) two star passes; (D) the "
-   "optimised tool path; (E) pipelined servicing. Discrete-event simulation of this kind is "
+   "optimised tool path; (E) pipelined servicing. Three uncertainty models are compared to "
+   "test whether the conclusions depend on the distributional assumptions (Section 5.6). "
+   "Spearman rank correlation is used as a computationally transparent screening measure of "
+   "sensitivity; variance-based (Sobol) analysis is deferred until empirical parameter "
+   "distributions are available from the validation programme, since apportioning variance "
+   "among assumed distributions would add precision without adding information. "
+   "Discrete-event simulation of this kind is "
    "standard for evaluating manufacturing designs before they are built %s."
    % (R["n_mc"], R["seed"], C("brown2010"), C("negahban2014")))
 H2("4.5 Preload model")
@@ -593,7 +601,8 @@ CAP("Fig. 4 Distribution of total bolting time by configuration, with the 1.5\u2
 Pp("With one head per flange and the flanges worked in parallel, bolting takes %s, set by "
    "the bottom head. Working the flanges in series nearly doubles this to %.1f h, and using "
    "only circular passes, which would not satisfy the legacy procedure, still leaves %.1f h. "
-   "Most importantly, the single-head configuration cannot meet the 2.5 h target even in its "
+   "Most importantly, within the investigated parameter bounds the single-head configuration "
+   "cannot meet the 2.5 h target even in its "
    "best case of %.2f h. A second head per flange halves the time to %.1f h. Only four "
    "synchronised heads bring the median within the target, at %s, and even then the target "
    "is met in %.0f%% of samples; four heads with one fewer star pass raise this to %.0f%%. "
@@ -656,16 +665,19 @@ CAP("Table 5. Removing the bottlenecks of the automated architecture one at a ti
     "change to the row above.")
 Pp("Table 5 and Fig. 6 remove the bottlenecks in turn. Giving each of the four heads its own "
    "bolt-transfer channel, for example a carousel with four access stations, cuts bolting from "
-   "%.2f to %.2f h and raises the probability of meeting 2.5 h from %.2f to %.2f. Removing one "
-   "star pass brings bolting to %.2f h, inside the target in every sample; this is a change to "
-   "the joint-assembly procedure, not to the machine, and is admissible only if a reduced-pass "
-   "procedure of the kind described as an alternative to the legacy sequence %s is shown to "
-   "give equivalent preload uniformity on the actual joint (Section 7). With these two changes "
-   "the parallelisation is complete: the torque heads, the bolt handling and the passes all "
-   "scale together."
+   "%.2f to %.2f h and raises the probability of meeting 2.5 h from %.2f to %.2f. This is a "
+   "change to the machine alone, with the legacy tightening procedure unaltered, and it is the "
+   "configuration the analysis recommends: four heads and four transfer channels meet the "
+   "bolting target without any change to how the joint is assembled. Removing one star pass "
+   "brings bolting further to %.2f h, inside the target in every sample, but this is a change "
+   "to the joint-assembly procedure rather than to the machine. It is an optional process "
+   "improvement, admissible only if a reduced-pass procedure of the kind described as an "
+   "alternative to the legacy sequence %s is shown to give equivalent preload uniformity on "
+   "the actual joint (Section 7); the architecture does not depend on it."
    % (OA["bolting_total"]["median"], OB["bolting_total"]["median"], OA["p_bolting_le_2.5h"],
       OB["p_bolting_le_2.5h"], OC["bolting_total"]["median"], C("brown2010")))
-Pp("The exactly optimised tool path adds little. With four heads it cuts carriage travel per "
+Pp("The exactly optimised tool path adds little, and it is reported for what it shows rather "
+   "than as part of the recommended design. With four heads it cuts carriage travel per "
    "star pass on the bottom head from %.2f to %.2f bolt-circle diameters, but travel is by "
    "then a small part of the cycle and bolting falls only from %.2f to %.2f h. With one head, "
    "where travel matters, the optimum reduces travel per star pass only from %.1f to %.1f "
@@ -686,27 +698,91 @@ Pp("The complete operation is a different matter. Even in configuration E it tak
    "(90%% interval %.2f–%.2f h) and meets 2.5 h in none of the %d samples. Of the median, "
    "%.2f h is bolting and %.2f h is servicing: head handling in both directions (%.2f h), the "
    "leak test (%.2f h), gasket and face work (%.2f h) and atmosphere confirmation (%.2f h). "
-   "For the complete operation to fit in 2.5 h with bolting at %.2f h, the servicing steps "
-   "would have to total %.2f h, less than their %.2f h minimum within the assumed ranges. "
    "The 2.5 h target is therefore achievable for bolting, which is what the source proposal "
    "stated, but not for the complete operation; once bolting is parallelised, head handling "
    "and the leak test become the next bottlenecks."
    % (OE["full_total"]["median"], OE["full_total"]["p05"], OE["full_total"]["p95"], R["n_mc"],
       COMP["bolting"], COMP["non_bolting_median_h"], COMP["head_both_ways"], COMP["leak_test"],
-      COMP["gasket"], COMP["atmos"], COMP["bolting"], 2.5 - COMP["bolting"],
-      COMP["floor_non_bolting_min_h"]))
+      COMP["gasket"], COMP["atmos"]))
+SE = R["servicing_envelope"]
+Pp("That observation can be turned into a performance requirement for the servicing "
+   "subsystems. For a complete operation of at most 2.5 h, the servicing steps must satisfy")
+EQ_SERVICE = EQ("t_atmos + 2t_head + t_gasket + t_leak ≤ 2.5 h − T_bolting")
+Pp("With the recommended configuration B (median bolting %.2f h) the servicing budget is "
+   "%.2f h, or %.0f min; with the optional reduced-pass configuration C (%.2f h) it is %.2f h, "
+   "or %.0f min. The assumed servicing ranges give %.2f h at the median and %.2f h at best. "
+   "With configuration C, a 2.5 h complete operation would need, for example, head handling "
+   "of about 10 min each way, gasket and face work of about 10 min, a leak test of about "
+   "15 min and atmosphere confirmation under 5 min, about 50 min in all; with B the same "
+   "steps would have to fit in about 40 min. Either is roughly a halving of every servicing "
+   "step. "
+   "Equation (%d) is the envelope any faster head-handling or leak-test design would have to "
+   "meet; no such design is evaluated here."
+   % (SE["B + 4 transfer channels"]["bolting_median_h"], SE["B + 4 transfer channels"]["servicing_budget_h"],
+      SE["B + 4 transfer channels"]["servicing_budget_min"], SE["C + 2 star passes"]["bolting_median_h"],
+      SE["C + 2 star passes"]["servicing_budget_h"], SE["C + 2 star passes"]["servicing_budget_min"],
+      SE["assumed_median_h"], SE["assumed_min_h"], EQN[0]), indent=False)
 FIG("figure6_optimisation")
 CAP("Fig. 6 (a) Bolting time and (b) complete-operation time as the bottlenecks are removed "
     "one at a time (Table 5). Shading marks 2.5 h; labels give the median and the probability "
     "of meeting 2.5 h.")
-H2("5.6 Preload")
+H2("5.6 Robustness to the uncertainty model")
+RBU = R["robustness"]
+dnames = list(RBU)
+cn = ["1 head", "2 heads", "A 4 heads", "B + 4 channels", "C + 2 star passes"]
+TBL(["Configuration"] + ["%s: median (h) / P(≤ 2.5 h)" % d for d in dnames],
+    [[c_] + ["%.2f / %.2f" % (RBU[d][c_]["median"], RBU[d][c_]["p_le_2.5h"]) for d in dnames]
+     for c_ in cn] + [["Ranking 1 > 2 > A > B holds in"] +
+                      ["%.1f%% of samples" % (100 * RBU[d]["ranking_holds_fraction"]) for d in dnames]],
+    widths=[1.6, 1.6, 1.6, 1.6])
+CAP("Table 6. Bolting time under three uncertainty models: the baseline independent uniform "
+    "distributions, independent symmetric triangular distributions with the mode at the "
+    "midpoint of each range, and uniform margins with a correlation of 0.6, through a Gaussian "
+    "copula, among alignment, engagement and torque times, retry and review probabilities and "
+    "bolt size.")
+Pp("The step-time ranges of Table 2 are assumptions, and so are the uniform distributions and "
+   "the independence with which they are sampled. A reviewer could reasonably argue that a "
+   "large, badly aligned bolt takes longer to align, engage and torque and is also likelier "
+   "to need a retry or review, so that those inputs move together. Table 6 repeats the "
+   "analysis under two alternatives: triangular distributions centred on the nominal value, "
+   "and a pessimistic case in which those six inputs are positively correlated. The medians "
+   "barely move, because the ranges are unchanged; the tails do. In the correlated case the "
+   "probability that the recommended configuration B meets 2.5 h falls from %.2f to %.2f and "
+   "its 95th percentile rises from %.2f to %.2f h, whereas under triangular distributions it "
+   "rises to %.3f. What does not change is the architectural ranking: one head is slower "
+   "than two, two slower than four, and four heads with a single carousel slower than four "
+   "with four transfer channels, in every one of the %d samples under all three models. The "
+   "paper's central claim is that ranking, not the particular value of %.2f h."
+   % (RBU[dnames[0]]["B + 4 channels"]["p_le_2.5h"], RBU[dnames[2]]["B + 4 channels"]["p_le_2.5h"],
+      RBU[dnames[0]]["B + 4 channels"]["p95"], RBU[dnames[2]]["B + 4 channels"]["p95"],
+      RBU[dnames[1]]["B + 4 channels"]["p_le_2.5h"], R["n_mc"],
+      RBU[dnames[0]]["B + 4 channels"]["median"]))
+FM = R["feasibility_map"]
+Pp("Fig. 7 generalises the discrete configurations into a design feasibility map over the "
+   "number of torque heads and transfer channels per flange, for the legacy three-star-pass "
+   "procedure and a two-pass alternative. Heads are limited to 1, 2 and 4 because they must "
+   "be equally spaced on all three flanges, and 32, 48 and 12 bolts are all divisible only "
+   "by those. The feasible region, where bolting meets 2.5 h in at least 90%% of samples, "
+   "requires four heads under either procedure: with four heads, two transfer channels give "
+   "%.2f under the legacy procedure, and the two-pass procedure reaches %.2f, just short of "
+   "the threshold, even with a single channel. With two heads no combination exceeds %.2f. Adding channels without adding heads "
+   "achieves almost nothing, because transfer is a bottleneck only once torque application "
+   "has been parallelised."
+   % (FM["3,4,2"]["p_le_2.5h"], FM["2,4,1"]["p_le_2.5h"],
+      max(v["p_le_2.5h"] for k, v in FM.items() if k.split(",")[1] == "2")))
+FIG("figure7_feasibility", width=6.0)
+CAP("Fig. 7 Design feasibility map: probability that bolting meets 2.5 h (colour and upper "
+    "number) and median bolting time (lower number) against torque heads and bolt-transfer "
+    "channels per flange, for (a) the legacy three-star-pass procedure and (b) a two-pass "
+    "alternative that would require qualification.")
+H2("5.7 Preload")
 g = grid
-Pp("Fig. 7a shows that the \u00b12%% torque accuracy stated for the system has almost no "
+Pp("Fig. 8a shows that the \u00b12%% torque accuracy stated for the system has almost no "
    "effect on preload scatter. With CV_K = 10%%, preload CV is %.1f%% for a \u00b12%% tool, "
    "%.1f%% for \u00b15%% and %.1f%% for \u00b110%%; %.0f%% of bolts fall outside \u00b110%% of "
    "target even with the \u00b12%% tool. Preload scatter is set by the nut factor, as the "
    "torque\u2013tension literature leads one to expect %s. The angle channel is what changes "
-   "the outcome (Fig. 7b): with an angle-based preload estimate of 3%% uncertainty and "
+   "the outcome (Fig. 8b): with an angle-based preload estimate of 3%% uncertainty and "
    "re-torque of bolts outside \u00b110%%, the fraction outside falls from %.0f%% to %.0f%% "
    "(CV_K = 10%%) and from %.0f%% to %.0f%% (CV_K = 15%%), at the cost of re-torquing %.0f%% "
    "and %.0f%% of bolts respectively. With a 5%% angle-estimate uncertainty the residual is "
@@ -720,16 +796,16 @@ Pp("Fig. 7a shows that the \u00b12%% torque accuracy stated for the system has a
       100 * ta[(0.15, 0.03)]["outside10_before"], 100 * ta[(0.15, 0.03)]["outside10_after"],
       100 * ta[(0.1, 0.03)]["flagged_frac"], 100 * ta[(0.15, 0.03)]["flagged_frac"],
       100 * ta[(0.1, 0.05)]["outside10_after"]))
-FIG("figure7_preload")
-CAP("Fig. 7 (a) Achieved preload coefficient of variation against nut-factor variation for "
+FIG("figure8_preload")
+CAP("Fig. 8 (a) Achieved preload coefficient of variation against nut-factor variation for "
     "three tool accuracies. (b) Fraction of bolts outside \u00b110% of target under torque "
     "control alone and with torque\u2013angle re-torque, for two nut-factor scatters and three "
     "angle-estimate uncertainties.")
-H2("5.7 Head handling")
+H2("5.8 Head handling")
 Pp("Without counterbalance, lifting a 5 t head at SF 1.5 from 6 bar air needs a %.0f mm "
    "cylinder and a 10 t head %.0f mm, beyond the largest standard bore. The minimum "
    "counterbalance fraction that keeps a single cylinder within 320 mm is %.0f%% for 5 t, "
-   "%.0f%% for 10 t, %.0f%% for 15 t and %.0f%% for 20 t (Fig. 8). A pneumatic manipulator "
+   "%.0f%% for 10 t, %.0f%% for 15 t and %.0f%% for 20 t (Fig. 9). A pneumatic manipulator "
    "is therefore feasible only as a counterbalanced device in which air supplies the balance "
    "correction and motion, not the lift, consistent with passive gravity compensation "
    "%s. Compressibility also makes a pneumatic axis compliant, so the final seating of the "
@@ -738,15 +814,15 @@ Pp("Without counterbalance, lifting a 5 t head at SF 1.5 from 6 bar air needs a 
    % (man[5]["bore_mm_c0.00"], man[10]["bore_mm_c0.00"], 100 * man[5]["min_counterbalance"],
       100 * man[10]["min_counterbalance"], 100 * man[15]["min_counterbalance"],
       100 * man[20]["min_counterbalance"], C("arakelian2016")))
-FIG("figure8_manipulator", width=5.2)
-CAP("Fig. 8 Single-cylinder bore needed to lift a head against its unbalanced weight, as a "
+FIG("figure9_manipulator", width=5.2)
+CAP("Fig. 9 Single-cylinder bore needed to lift a head against its unbalanced weight, as a "
     "function of head mass and counterbalance fraction. Head mass was not available and is "
     "swept.")
-H2("5.8 Control logic")
+H2("5.9 Control logic")
 Pp("With the full interlock set and the resume rule, exhaustive exploration finds no safety "
    "violation: %d reachable states and %d checked transitions for a 12-bolt flange (%d and "
    "%d for 4 bolts), with all 13 modes reachable and no deadlocked state. Every mutant is "
-   "detected (Table 6), so each invariant is capable of failing. The liveness check, however, "
+   "detected (Table 7), so each invariant is capable of failing. The liveness check, however, "
    "found a defect in the logic as first specified. Without an explicit rule for resuming an "
    "interrupted phase, %d of %d reachable states for a 12-bolt flange (%d of %d for 4 bolts) "
    "can never reach OPEN or CLOSED: an emergency stop part-way through unbolting or "
@@ -764,11 +840,11 @@ MUT = {"esd": "Emergency stop", "gas_before_unbolt": "Gas clearance before tool 
        "signoff_before_closed": "Operator sign-off before CLOSED"}
 TBL(["Interlock removed", "Invariant violated", "Shortest counterexample (transitions)"],
     [[MUT[k], v[0][0], str(v[0][1])] for k, v in V["mutants"].items()], widths=[2.3, 2.8, 1.2])
-CAP("Table 6. Mutation test of the interlock logic (4-bolt flange). Each interlock removed "
+CAP("Table 7. Mutation test of the interlock logic (4-bolt flange). Each interlock removed "
     "in isolation is caught by the invariant it protects.")
-H2("5.9 Failure modes")
-Pp("The highest-ranked failure mode (Fig. 9, Table 7) is an out-of-window preload that goes "
-   "undetected (RPN %d), which follows directly from Section 5.6: torque control alone cannot "
+H2("5.10 Failure modes")
+Pp("The highest-ranked failure mode (Fig. 10, Table 8) is an out-of-window preload that goes "
+   "undetected (RPN %d), which follows directly from Section 5.7: torque control alone cannot "
    "see a nut-factor outlier, and detection depends on the angle channel. Second is failure "
    "of gas detection to register residual hydrocarbons (RPN %d, severity 10), which is why "
    "the design specifies voted redundant detectors and a pre-cycle functional test. The "
@@ -776,19 +852,19 @@ Pp("The highest-ranked failure mode (Fig. 9, Table 7) is an out-of-window preloa
    "engaged and loss of air under load \u2014 are those the interlocks and the mechanical lock "
    "address by design; their low RPN reflects the control, not the absence of the hazard."
    % (fm[0]["RPN"], fm[1]["RPN"]))
-FIG("figure9_fmea")
-CAP("Fig. 9 Design FMEA ranked by risk priority number; colour indicates severity. Scores "
-    "are the author's judgement and are listed with their controls in Table 7.")
+FIG("figure10_fmea")
+CAP("Fig. 10 Design FMEA ranked by risk priority number; colour indicates severity. Scores "
+    "are the author's judgement and are listed with their controls in Table 8.")
 TBL(["Failure mode", "Effect", "S", "O", "D", "RPN", "Control"],
     [[f["mode"], f["effect"], f["S"], f["O"], f["D"], f["RPN"], f["control"]] for f in fm],
     fs=7.5, widths=[1.6, 1.3, 0.3, 0.3, 0.3, 0.4, 2.0])
-CAP("Table 7. Design FMEA (1\u201310 scales; D = 10 is undetectable).")
-H2("5.10 Automation coverage and exposure")
+CAP("Table 8. Design FMEA (1\u201310 scales; D = 10 is undetectable).")
+H2("5.11 Automation coverage and exposure")
 TBL(["Operation", "Modelled duration (h)", "Automation level a\u1d62"],
     [[t["task"], "%.2f" % t["hours"], "%.1f" % t["a"]] for t in ex["tasks"]], widths=[3.2, 1.5, 1.5])
-CAP("Table 8. Operations, modelled durations (one-head configuration, medians) and "
+CAP("Table 9. Operations, modelled durations (one-head configuration, medians) and "
     "automation levels used in the coverage metric.")
-Pp("Weighted by modelled duration, automation coverage is A = %.2f (Table 8). The reported "
+Pp("Weighted by modelled duration, automation coverage is A = %.2f (Table 9). The reported "
    "manual procedure places four to six workers in the hazard zone for four to six hours, "
    "%d\u2013%d person-hours per operation; with the automated system the routine value is "
    "zero, rising to at most %.2f person-hours if gasket cassette loading has to be done at the "
@@ -805,12 +881,13 @@ Pp("The analysis supports two of the three original targets and conditions the t
    "exposure target is met by design. The torque-accuracy target is achievable but, on its "
    "own, does not deliver the preload quality it appears to promise; what delivers it is the "
    "angle channel. The cycle-time target is not met by the architecture as first described, "
-   "with one runner per flange, under any combination of assumed step times. The %.1f h "
+   "with one runner per flange, anywhere within the investigated parameter bounds. The %.1f h "
    "single-head result is not a failure of the concept but a finding about it: a single "
    "tool is the wrong architecture for a 92-bolt, multi-pass closure. The architecture the "
-   "analysis supports has four synchronised heads per flange, one bolt-transfer channel per "
-   "head and, if validated, a two-star-pass procedure, which brings bolting from %.1f h to "
-   "%.1f h. Parallelisation, not faster tools, is what matters: the admissibility analysis "
+   "analysis supports has four synchronised heads per flange and one bolt-transfer channel "
+   "per head, with the legacy tightening procedure unchanged, which brings bolting from %.1f h "
+   "to %.1f h; a qualified two-star-pass procedure is an optional further step, not a "
+   "requirement. Parallelisation, not faster tools, is what matters: the admissibility analysis "
    "shows that no plausible per-bolt time lets one head meet the target, and once torque "
    "application is parallelised every stage around it — bolt handling above all — "
    "must be parallelised too. This is a substantially larger and more expensive machine "
@@ -820,7 +897,7 @@ Pp("The analysis supports two of the three original targets and conditions the t
    "The target also has to be read as the source stated it, for bolting: the complete "
    "operation remains about %.1f h, governed by head handling and the leak test, and "
    "shortening it is a separate design problem for those subsystems."
-   % (b1["bolting_total"]["median"], b1["bolting_total"]["median"], OC["bolting_total"]["median"],
+   % (b1["bolting_total"]["median"], b1["bolting_total"]["median"], OB["bolting_total"]["median"],
       OE["full_total"]["median"]))
 H2("6.2 Sequence choice as a throughput lever")
 Pp("For a single head the star pattern costs far more travel than a circular pass (Fig. 2b), "
@@ -863,7 +940,7 @@ Pp("The source proposal described hazardous-area certification of the integrated
    "carousel and the controller, must satisfy the applicable protection concepts as a whole "
    "%s. The gas-clearance and head-motion interlocks are safety functions, and their "
    "integrity requirements belong to a functional-safety assessment %s. The exhaustive check "
-   "in Section 5.8 shows that the logic is consistent and deadlock-free as specified; it does "
+   "in Section 5.9 shows that the logic is consistent and deadlock-free as specified; it does "
    "not establish the hardware fault tolerance or safety integrity level of its "
    "implementation." % (C("iec60079", "atex", "singh2023"), C("iec61511")))
 H2("6.6 Limitations")
@@ -879,8 +956,8 @@ Pp("Every performance figure in this paper is a model prediction. The step-time 
    "Section 8.")
 
 # ==================================================================== 7
-H("7 Validation plan")
-Pp("The predictions above can be falsified by a staged test programme. Table 9 lists the "
+H("7 Experimental validation and falsification plan")
+Pp("The predictions above can be falsified by a staged test programme. Table 10 lists the "
    "measurements, the rig on which each is made and the acceptance criterion that would "
    "confirm or refute the corresponding result.")
 TBL(["Quantity", "Rig", "Acceptance criterion"],
@@ -899,9 +976,9 @@ TBL(["Quantity", "Rig", "Acceptance criterion"],
       "Final preload scatter and gasket-stress uniformity no worse than the legacy three-pass "
       "procedure; otherwise configuration B, not C–E, is the design"],
      ["Nut-factor scatter CV_K", "Instrumented studs (ultrasonic elongation) on the mock-up",
-      "Measured CV_K; preload prediction of Fig. 7a to be confirmed within \u00b12 points"],
+      "Measured CV_K; preload prediction of Fig. 8a to be confirmed within \u00b12 points"],
      ["Angle-estimate uncertainty CV_\u03b8", "As above, with gasket installed",
-      "CV_\u03b8 \u2264 5% for the torque\u2013angle benefit of Fig. 7b to hold"],
+      "CV_\u03b8 \u2264 5% for the torque\u2013angle benefit of Fig. 8b to hold"],
      ["Engagement success on distorted flange", "Mock-up with imposed ovality and cupping",
       "Retry probability within Table 2 range"],
      ["Interlock logic", "Controller hardware-in-the-loop",
@@ -909,7 +986,7 @@ TBL(["Quantity", "Rig", "Acceptance criterion"],
      ["Head handling", "Counterbalanced manipulator with dummy head at maximum mass",
       "Lift, swing, lock and reseat without personnel in load path; lock holds on air loss"]],
     widths=[1.8, 2.2, 2.3])
-CAP("Table 9. Validation measurements and acceptance criteria. A pilot on one bottom head is "
+CAP("Table 10. Validation measurements and acceptance criteria. A pilot on one bottom head is "
     "proposed only after the single-station and mock-up tests have been passed.")
 
 # ==================================================================== 8
@@ -924,35 +1001,49 @@ Pp("Each subsystem uses established technology \u2014 pneumatic torque multiplie
    "channels on each flange if the bolting target is to be met, so those estimates are likely "
    "to be low and should be revised after the single-station tests; shortening the complete "
    "operation further would require faster head handling and leak testing, which were not "
-   "costed. A staged programme \u2014 single-station "
+   "costed. Rather than substitute another point estimate, the revised cost per flange is "
+   "structured as")
+EQ("C = C_fixed + r\u00b7C_head + c\u00b7C_channel + C_controls + C_certification")
+Pp("with r = 4 heads and c = 4 transfer channels in the recommended configuration; the "
+   "coefficients \u2014 rail and structure, each torque head, each transfer channel, the "
+   "controls and the hazardous-area certification of the integrated assembly \u2014 require "
+   "vendor quotations and are not estimated here. A staged programme \u2014 single-station "
    "rig, full-flange mock-up, then a pilot on one bottom head \u2014 allows the project to "
    "stop cheaply if the measured step times, nut-factor scatter or engagement success fall "
-   "outside the ranges on which the results depend.")
+   "outside the ranges on which the results depend.", indent=False)
 
 # ==================================================================== 9
 H("9 Conclusions")
 Pp("An automated architecture for opening and closing a 92-bolt, three-flange pressure "
    "vessel was evaluated by simulation against the targets originally claimed for it. With "
    "one torque head per flange, bolting takes a median %.1f h and cannot meet a 2.5 h target "
-   "under any assumed step times: a single tool is the wrong architecture for this closure. "
-   "Parallelising in stages brings bolting to %.1f h with four synchronised heads, %.1f h "
-   "with a bolt-transfer channel per head and %.1f h with one fewer star pass, the last "
-   "subject to validation of preload uniformity. An exactly optimised tool path and "
-   "pipelined servicing add little, the first because the opposite-bolt rule fixes most of "
-   "the travel and the second because the bottom head is on the critical path in every "
-   "phase. The complete operation remains about %.1f h, governed by head handling and the "
-   "leak test, so the 2.5 h target holds for bolting but not for the whole operation. "
-   "Specifying \u00b12%% "
-   "torque accuracy does little for preload, which nut-factor scatter dominates, whereas "
-   "torque\u2013angle verification with re-torque substantially narrows it. The interlock "
-   "logic is safe as specified but deadlocks after an interrupted sequence unless an explicit "
-   "resume rule is added. Pneumatic head handling requires a counterbalance carrying most of "
+   "within the investigated parameter bounds: a single tool is the wrong architecture for "
+   "this closure. "
+   "Parallelising in stages brings bolting to %.1f h with four synchronised heads and %.1f h "
+   "with a bolt-transfer channel per head. That machine-only configuration, with the legacy "
+   "tightening procedure unchanged, is the recommended design: it meets the bolting target in "
+   "%.0f%% of samples, and the ranking of architectures that leads to it holds in every "
+   "sample under uniform, triangular and correlated input models. One fewer star pass would "
+   "bring bolting to %.1f h but is an optional process change that requires qualification of "
+   "preload uniformity. An exactly optimised tool path and pipelined servicing add little, the "
+   "first because the opposite-bolt rule fixes most of the travel and the second because the "
+   "bottom head is on the critical path in every phase. The complete operation remains about "
+   "%.1f h, governed by head handling and the leak test, so the 2.5 h target holds for "
+   "bolting but not for the whole operation; Eq. (%d) gives the servicing-time envelope a "
+   "faster design would have to meet. Specifying \u00b12%% torque accuracy does little for "
+   "preload, which nut-factor scatter dominates, whereas torque\u2013angle verification with "
+   "re-torque substantially narrows it, to an extent that depends on how well joint stiffness "
+   "is known. "
+   "Explicit-state verification found no violation of the seven safety invariants but exposed "
+   "widespread deadlock in the initial interlock specification after interrupted sequences; "
+   "adding an explicit resume rule eliminated every deadlock while preserving all seven "
+   "invariants. Pneumatic head handling requires a counterbalance carrying most of "
    "the load. The reduction in hazard-zone exposure, from %d\u2013%d person-hours to "
    "essentially none, is the most robust benefit. These are predictions, and the validation "
    "plan specifies the measurements that would confirm or overturn them."
    % (b1["bolting_total"]["median"], OA["bolting_total"]["median"], OB["bolting_total"]["median"],
-      OC["bolting_total"]["median"], OE["full_total"]["median"],
-      ex["manual_person_hours"][0], ex["manual_person_hours"][1]))
+      100 * OB["p_bolting_le_2.5h"], OC["bolting_total"]["median"], OE["full_total"]["median"],
+      EQ_SERVICE, ex["manual_person_hours"][0], ex["manual_person_hours"][1]))
 
 # ==================================================================== DECLARATIONS
 H("Declarations")

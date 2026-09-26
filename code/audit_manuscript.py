@@ -49,8 +49,20 @@ for m in re.finditer(r"\[([\d,\s\u2013-]+)\]", body):
 listed = set(range(1, len(refs) + 1))
 print("  references: %d listed, never cited %s, cited-not-listed %s"
       % (len(refs), sorted(listed - cited) or "none", sorted(cited - listed) or "none"))
-figs = set(int(x) for x in re.findall(r"Fig\. (\d)", body))
-tabs = set(int(x) for x in re.findall(r"Table (\d)", body))
+figs = set(int(x) for x in re.findall(r"Fig\. (\d+)", body))
+tabs = set(int(x) for x in re.findall(r"Table (\d+)", body))
+n_fig = len({int(m.group(1)) for p_ in paras for m in [re.match(r"^Fig\. (\d+) ", p_)] if m})
+n_tab = len({int(m.group(1)) for p_ in paras for m in [re.match(r"^Table (\d+)\. ", p_)] if m})
+if figs != set(range(1, n_fig + 1)) or tabs != set(range(1, n_tab + 1)):
+    print("  !! figure/table citations do not match captions:", n_fig, n_tab)
+    bad += 1
+first = []
+for m in re.finditer(r"Fig\. (\d+)", body):
+    if int(m.group(1)) not in first:
+        first.append(int(m.group(1)))
+if first != sorted(first):
+    print("  !! figures first cited out of order:", first)
+    bad += 1
 print("  figures cited:", sorted(figs), " tables cited:", sorted(tabs))
 for phrase in ("guaranteed", "eliminates manual personnel exposure", "TRL 7", "Wazoku",
                "InnoCentive", "YPF", "winning"):

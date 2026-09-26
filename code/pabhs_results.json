@@ -713,6 +713,180 @@
    "non_bolting_median_h": 1.85
   }
  },
+ "robustness": {
+  "uniform, independent": {
+   "1 head": {
+    "median": 7.96,
+    "p95": 10.51,
+    "p_le_2.5h": 0.0
+   },
+   "2 heads": {
+    "median": 3.99,
+    "p95": 5.06,
+    "p_le_2.5h": 0.001
+   },
+   "A 4 heads": {
+    "median": 2.28,
+    "p95": 2.9,
+    "p_le_2.5h": 0.727
+   },
+   "B + 4 channels": {
+    "median": 1.82,
+    "p95": 2.37,
+    "p_le_2.5h": 0.98
+   },
+   "C + 2 star passes": {
+    "median": 1.6,
+    "p95": 2.1,
+    "p_le_2.5h": 0.999
+   },
+   "ranking_holds_fraction": 1.0
+  },
+  "triangular, independent": {
+   "1 head": {
+    "median": 7.86,
+    "p95": 9.61,
+    "p_le_2.5h": 0.0
+   },
+   "2 heads": {
+    "median": 3.96,
+    "p95": 4.73,
+    "p_le_2.5h": 0.0
+   },
+   "A 4 heads": {
+    "median": 2.28,
+    "p95": 2.72,
+    "p_le_2.5h": 0.8
+   },
+   "B + 4 channels": {
+    "median": 1.82,
+    "p95": 2.21,
+    "p_le_2.5h": 0.997
+   },
+   "C + 2 star passes": {
+    "median": 1.6,
+    "p95": 1.96,
+    "p_le_2.5h": 1.0
+   },
+   "ranking_holds_fraction": 1.0
+  },
+  "uniform, correlated (rho = 0.6)": {
+   "1 head": {
+    "median": 7.94,
+    "p95": 11.05,
+    "p_le_2.5h": 0.0
+   },
+   "2 heads": {
+    "median": 3.98,
+    "p95": 5.42,
+    "p_le_2.5h": 0.012
+   },
+   "A 4 heads": {
+    "median": 2.27,
+    "p95": 3.11,
+    "p_le_2.5h": 0.678
+   },
+   "B + 4 channels": {
+    "median": 1.82,
+    "p95": 2.6,
+    "p_le_2.5h": 0.924
+   },
+   "C + 2 star passes": {
+    "median": 1.6,
+    "p95": 2.3,
+    "p_le_2.5h": 0.985
+   },
+   "ranking_holds_fraction": 1.0
+  }
+ },
+ "feasibility_map": {
+  "3,1,1": {
+   "median": 7.96,
+   "p_le_2.5h": 0.0
+  },
+  "3,1,2": {
+   "median": 7.66,
+   "p_le_2.5h": 0.0
+  },
+  "3,1,4": {
+   "median": 7.51,
+   "p_le_2.5h": 0.0
+  },
+  "3,2,1": {
+   "median": 3.99,
+   "p_le_2.5h": 0.001
+  },
+  "3,2,2": {
+   "median": 3.69,
+   "p_le_2.5h": 0.007
+  },
+  "3,2,4": {
+   "median": 3.54,
+   "p_le_2.5h": 0.017
+  },
+  "3,4,1": {
+   "median": 2.28,
+   "p_le_2.5h": 0.727
+  },
+  "3,4,2": {
+   "median": 1.97,
+   "p_le_2.5h": 0.938
+  },
+  "3,4,4": {
+   "median": 1.82,
+   "p_le_2.5h": 0.98
+  },
+  "2,1,1": {
+   "median": 6.83,
+   "p_le_2.5h": 0.0
+  },
+  "2,1,2": {
+   "median": 6.53,
+   "p_le_2.5h": 0.0
+  },
+  "2,1,4": {
+   "median": 6.38,
+   "p_le_2.5h": 0.0
+  },
+  "2,2,1": {
+   "median": 3.51,
+   "p_le_2.5h": 0.016
+  },
+  "2,2,2": {
+   "median": 3.2,
+   "p_le_2.5h": 0.062
+  },
+  "2,2,4": {
+   "median": 3.05,
+   "p_le_2.5h": 0.115
+  },
+  "2,4,1": {
+   "median": 2.06,
+   "p_le_2.5h": 0.897
+  },
+  "2,4,2": {
+   "median": 1.75,
+   "p_le_2.5h": 0.992
+  },
+  "2,4,4": {
+   "median": 1.6,
+   "p_le_2.5h": 0.999
+  }
+ },
+ "servicing_envelope": {
+  "B + 4 transfer channels": {
+   "bolting_median_h": 1.82,
+   "servicing_budget_h": 0.68,
+   "servicing_budget_min": 41.0
+  },
+  "C + 2 star passes": {
+   "bolting_median_h": 1.6,
+   "servicing_budget_h": 0.9,
+   "servicing_budget_min": 54.0
+  },
+  "assumed_min_h": 1.12,
+  "assumed_median_h": 1.85
+ },
  "sequence_optimisation": {
   "top head": {
    "legacy_min_separation": 2,

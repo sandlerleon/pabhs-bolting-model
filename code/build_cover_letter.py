@@ -51,8 +51,9 @@ P("Large bolted closures on process vessels are assembled and disassembled by ha
 P("Its main findings are:", after=4)
 for t in [
     "A Monte Carlo cycle-time model built on the actual star-pattern rail travel shows that "
-    "one torque head per flange needs a median %.1f h and cannot meet the 2.5 h target even "
-    "with every step at its fastest assumed value: a single tool is the wrong architecture. "
+    "one torque head per flange needs a median %.1f h and, within the investigated parameter "
+    "bounds, cannot meet the 2.5 h target even with every step at its fastest assumed value: "
+    "a single tool is the wrong architecture. "
     "Removing the bottlenecks in turn gives %.1f h with four synchronised heads, %.1f h with a "
     "bolt-transfer channel per head and %.1f h with one fewer star pass. An exactly optimised "
     "tool path adds little, because the opposite-bolt rule fixes most of the travel, and the "
