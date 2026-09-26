@@ -235,7 +235,7 @@ axs[1].legend(frameon=False, fontsize=6.8)
 for a in axs:
     a.spines[["top", "right"]].set_visible(False)
 fig.tight_layout()
-save(fig, "figure6_preload")
+save(fig, "figure7_preload")
 
 # ------------------------------------------------------------------ Figure 7
 fig, ax = plt.subplots(figsize=(6.2, 3.6))
@@ -252,7 +252,7 @@ ax.set_title("Pneumatic lift is feasible only with counterbalance", loc="left", 
 ax.legend(frameon=False, fontsize=7)
 ax.set_ylim(0, 900)
 ax.spines[["top", "right"]].set_visible(False)
-save(fig, "figure7_manipulator")
+save(fig, "figure8_manipulator")
 
 # ------------------------------------------------------------------ Figure 8
 F = R["fmea"]
@@ -269,4 +269,31 @@ ax.set_xlabel("risk priority number, S × O × D")
 ax.set_title("Design FMEA (author-scored; red: S ≥ 9, orange: S 7–8)", loc="left", fontweight="bold")
 ax.set_xlim(0, max(rpn) * 1.35)
 ax.spines[["top", "right"]].set_visible(False)
-save(fig, "figure8_fmea")
+save(fig, "figure9_fmea")
+
+# ------------------------------------------------------------------ Figure 6
+O = np.load("_mc_opt.npy") / 3600.0          # [bolting|complete, config, sample]
+names6 = ["1 head\n(baseline)", "A  4 heads\n1 carousel", "B  + 4 transfer\nchannels",
+          "C  + 2 star\npasses", "D  + optimised\nsequence", "E  + pipelined\nservicing"]
+fig, axs = plt.subplots(1, 2, figsize=(9.2, 3.8), sharey=True)
+for ax, k, title in ((axs[0], 0, "A   Bolting time, 92 bolts"),
+                     (axs[1], 1, "B   Complete operation (open + close)")):
+    ax.axhspan(0, 2.5, color=GREEN, alpha=0.10, lw=0)
+    ax.axhline(2.5, color=GREEN, lw=1.0, ls="--")
+    parts = ax.violinplot(list(O[k]), positions=range(1, 7), widths=0.8, showmedians=True,
+                          showextrema=False)
+    for b in parts["bodies"]:
+        b.set_facecolor(BLUE if k == 0 else PURPLE); b.set_alpha(0.45)
+    parts["cmedians"].set_color(RED)
+    for i in range(6):
+        med = np.median(O[k][i])
+        ax.text(i + 1, min(O[k][i].max() + 0.25, 12.6), "%.2f h\nP≤2.5 h: %.2f" % (med, np.mean(O[k][i] <= 2.5)),
+                ha="center", fontsize=5.9)
+    ax.set_xticks(range(1, 7)); ax.set_xticklabels(names6, fontsize=6.3)
+    ax.set_title(title, loc="left", fontweight="bold")
+    ax.spines[["top", "right"]].set_visible(False)
+axs[0].set_ylabel("time (h)")
+axs[0].set_ylim(0, 13.5)
+axs[1].text(6.45, 2.62, "2.5 h", color=GREEN, fontsize=7, ha="right")
+fig.tight_layout()
+save(fig, "figure6_optimisation")

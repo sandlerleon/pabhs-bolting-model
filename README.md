@@ -25,8 +25,13 @@ each target.
 | Question | Result |
 |---|---|
 | Bolting time, 1 torque head per flange | median **7.96 h**; best case 2.96 h — cannot meet 2.5 h |
-| Bolting time, 4 synchronised heads per flange | median **2.31 h**; ≤ 2.5 h in 70 % of samples |
+| Bolting time, 4 synchronised heads per flange (A) | median **2.28 h**; ≤ 2.5 h in 73 % of samples |
 | Rate-limiting element with 4 heads | the **carousel** (26 % of bottom-flange time) |
+| B: + one bolt-transfer channel per head | **1.82 h**; ≤ 2.5 h in 98 % |
+| C: + one fewer star pass (needs preload validation) | **1.60 h**; ≤ 2.5 h in 100 % |
+| D: + exactly optimised tool path (Held–Karp, load-spreading constraint) | 1.57 h — little gain: the opposite-bolt rule fixes most travel |
+| E: + pipelined servicing | 1.57 h — no gain: bottom head is critical in every phase |
+| Complete operation (bolting + heads + gaskets + leak test), best config | **3.43 h**; never ≤ 2.5 h — servicing steps alone are ≥ 1.12 h |
 | Time budget the 2.5 h target implies | 23 s per bolt-pass vs 75 s modelled |
 | ±2 % torque accuracy | almost no effect on preload; nut-factor scatter dominates |
 | Torque–angle re-torque | bolts outside ±10 % of target: 32 % → 5 % (CV_K 10 %) |
@@ -39,15 +44,17 @@ each target.
 ```
 code/
   pabhs_model.py        geometry, star-sequence rail travel, Monte Carlo cycle time,
-                        sensitivity, admissibility, preload, manipulator, FMEA, exposure
+                        sensitivity, admissibility, bottleneck-removal study (A–E) with an
+                        exact constrained tool-path optimiser, preload, manipulator, FMEA,
+                        exposure
   plc_verify.py         exhaustive state-space check of the interlock logic, liveness
                         (deadlock) check, and mutation tests
-  make_figures.py       Figures 1–8 (300 dpi PNG + TIFF)
+  make_figures.py       Figures 1–9 (300 dpi PNG + TIFF)
   harvest_refs.py       Crossref metadata + abstracts for every DOI reference
   build_manuscript.py   manuscript; every number read from the JSON outputs
   build_cover_letter.py cover letter
   audit_manuscript.py   checks the document against the model and against itself
-figures/                Figures 1–8
+figures/                Figures 1–9
 manuscript/             manuscript and cover letter
 ```
 

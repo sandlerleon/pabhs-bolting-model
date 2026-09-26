@@ -14,6 +14,7 @@ V = json.load(io.open(os.path.join(HERE, "plc_verify_results.json"), encoding="u
 c = R["cycle"]
 b1, b4 = c["1 head, parallel flanges"], c["4 heads, parallel flanges"]
 ta = {(t["cv_K"], t["cv_theta"]): t for t in R["preload"]["torque_angle"]}
+O = R["optimisation"]
 
 TITLE = ("Automated bolting and head handling for multi-flange pressure-vessel closures: "
          "a simulation-based design evaluation with a delayed-coking case study")
@@ -51,9 +52,15 @@ P("Its main findings are:", after=4)
 for t in [
     "A Monte Carlo cycle-time model built on the actual star-pattern rail travel shows that "
     "one torque head per flange needs a median %.1f h and cannot meet the 2.5 h target even "
-    "with every step at its fastest assumed value; four synchronised heads per flange give "
-    "%.1f h, and the carousel then becomes the rate-limiting element."
-    % (b1["bolting_total"]["median"], b4["bolting_total"]["median"]),
+    "with every step at its fastest assumed value: a single tool is the wrong architecture. "
+    "Removing the bottlenecks in turn gives %.1f h with four synchronised heads, %.1f h with a "
+    "bolt-transfer channel per head and %.1f h with one fewer star pass. An exactly optimised "
+    "tool path adds little, because the opposite-bolt rule fixes most of the travel, and the "
+    "complete operation remains %.1f h, governed by head handling and the leak test."
+    % (b1["bolting_total"]["median"], O["A 4 heads, single carousel"]["bolting_total"]["median"],
+       O["B + 4 transfer channels"]["bolting_total"]["median"],
+       O["C + 2 star passes"]["bolting_total"]["median"],
+       O["E + pipelined servicing"]["full_total"]["median"]),
     "Specifying \u00b12%% torque accuracy has almost no effect on preload scatter, which "
     "nut-factor variation dominates; torque\u2013angle verification with re-torque reduces the "
     "share of bolts outside \u00b110%% of target from %.0f%% to %.0f%%."

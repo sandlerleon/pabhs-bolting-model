@@ -17,6 +17,9 @@ c = R["cycle"]
 CHECK = [
     ("1-head median", "%.2f" % c["1 head, parallel flanges"]["bolting_total"]["median"]),
     ("4-head median", "%.2f" % c["4 heads, parallel flanges"]["bolting_total"]["median"]),
+    ("config B bolting", "%.2f" % R["optimisation"]["B + 4 transfer channels"]["bolting_total"]["median"]),
+    ("config C bolting", "%.2f" % R["optimisation"]["C + 2 star passes"]["bolting_total"]["median"]),
+    ("config E complete", "%.2f" % R["optimisation"]["E + pipelined servicing"]["full_total"]["median"]),
     ("1-head best case", "%.2f" % R["best_case_bolting_h"]["1 head, parallel flanges"]),
     ("budget s/bolt-pass", "%.0f" % R["admissibility"]["budget_s_per_bolt_pass_parallel_2.5h"]),
     ("modelled s/bolt-pass", "%.0f" % R["admissibility"]["modelled_median_s_per_bolt_pass_bottom"]),

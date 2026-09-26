@@ -87,10 +87,86 @@ def travel_m(seq, n, D, runners=1):
     step = math.pi * D / n
     dist, moves = 0.0, 0
     for a, b in zip(s2, s2[1:]):
-        k = abs(a - b) % n
-        dist += min(k, n - k) * step            # shortest way round the rail
+        # with r equally spaced heads, station b is reached by whichever head is nearest,
+        # so the carriage moves the shortest way on a ring of m = n/r positions
+        k = (b - a) % m
+        dist += min(k, m - k) * step
         moves += 1
     return dist, moves
+
+
+def ring(a, b, m):
+    k = (b - a) % m
+    return min(k, m - k)
+
+
+def legacy_group_order(n):
+    """Order in which the legacy star visits its quartets (groups of four bolts at 90 deg)."""
+    q = n // 4
+    seq = legacy_star(n)
+    return [seq[4 * k] for k in range(q)]
+
+
+def min_separation(order, q):
+    return min(ring(a, b, q) for a, b in zip(order, order[1:])) if len(order) > 1 else 0
+
+
+def optimised_star(n, runners=1):
+    """Shortest carriage path over the quartets of an n-bolt flange, subject to a
+    load-spreading constraint: consecutive quartets must be at least as far apart as the
+    closest consecutive pair in the legacy star sequence. Solved exactly (Held-Karp);
+    q = n/4 <= 12 here. Each quartet is worked as i, i+2q, i+q, i+3q (opposite pairs
+    first), so for four heads a quartet is one station."""
+    q = n // 4
+    if q <= 2:
+        return legacy_star(n)
+    smin = min_separation(legacy_group_order(n), q)
+
+    def inner(g):                       # travel within a quartet, one head only
+        if runners != 1:
+            return 0
+        b = [g, g + 2 * q, g + q, g + 3 * q]
+        return sum(ring(x, y, n) for x, y in zip(b, b[1:]))
+
+    def cost(g, h):
+        if ring(g, h, q) < smin:
+            return float("inf")
+        if runners == 1:
+            return ring(g + 3 * q, h, n) + inner(h)
+        return ring(g, h, n // runners)
+
+    INF = float("inf")
+    dp = [[INF] * q for _ in range(1 << q)]
+    par = [[-1] * q for _ in range(1 << q)]
+    for g in range(q):
+        dp[1 << g][g] = inner(g)
+    for mask in range(1 << q):
+        for last in range(q):
+            v = dp[mask][last]
+            if v == INF or not (mask >> last) & 1:
+                continue
+            for h in range(q):
+                if (mask >> h) & 1:
+                    continue
+                c = v + cost(last, h)
+                nm = mask | (1 << h)
+                if c < dp[nm][h]:
+                    dp[nm][h], par[nm][h] = c, last
+    full = (1 << q) - 1
+    last = min(range(q), key=lambda g: dp[full][g])
+    assert dp[full][last] < INF, "no sequence satisfies the spreading constraint"
+    order, mask = [], full
+    while last != -1:
+        order.append(last)
+        prev = par[mask][last]
+        mask ^= 1 << last
+        last = prev
+    order.reverse()
+    seq = []
+    for g in order:
+        seq += [g, g + 2 * q, g + q, g + 3 * q]
+    assert sorted(seq) == list(range(n))
+    return seq
 
 
 # ------------------------------------------------------------------ 3. cycle model
@@ -134,8 +210,11 @@ def sample():
     return s
 
 
-def flange_times(f, s, runners=1, pattern="legacy", star_passes=TIGHTEN_STAR_PASSES):
-    """Opening and closing bolting time (s) for one flange, vectorised over samples."""
+def flange_times(f, s, runners=1, pattern="legacy", star_passes=TIGHTEN_STAR_PASSES,
+                 channels=1):
+    """Opening and closing bolting time (s) for one flange, vectorised over samples.
+    channels = number of bolt-transfer channels working in parallel (1 = a single
+    carousel serving one bolt at a time; r = one feed point per torque head)."""
     n = f["n"]
     d_lo, d_hi = f["d_mm"]
     d = d_lo + s["d_frac"] * (d_hi - d_lo)
@@ -143,7 +222,12 @@ def flange_times(f, s, runners=1, pattern="legacy", star_passes=TIGHTEN_STAR_PAS
     p = np.interp(d, sorted(PITCH), [PITCH[k] for k in sorted(PITCH)])
     turns = ENGAGE_LEN * d / p
     t_spin = turns / s["rpm_spin"] * 60.0
-    star = legacy_star(n) if pattern == "legacy" else circular(n)
+    if pattern == "legacy":
+        star = legacy_star(n)
+    elif pattern == "optimised":
+        star = optimised_star(n, runners)
+    else:
+        star = circular(n)
     circ = circular(n)
     work = n // runners                                 # bolt stations visited per pass
 
@@ -158,19 +242,24 @@ def flange_times(f, s, runners=1, pattern="legacy", star_passes=TIGHTEN_STAR_PAS
 
     # opening: staged breakout (star), then run-off + transfer to carousel (circular)
     t_open = LOOSEN_STAR_PASSES * pass_time(star, s["t_breakout"])
-    t_open += pass_time(circ, t_spin) + n * s["t_transfer"]       # one carousel per flange
+    xfer = n * s["t_transfer"] / channels
+    t_open += pass_time(circ, t_spin) + xfer
     # closing: transfer + run-on (circular), star torque passes, circular check passes
-    t_close = pass_time(circ, t_spin) + n * s["t_transfer"]
+    t_close = pass_time(circ, t_spin) + xfer
     t_close += star_passes * pass_time(star, s["t_torque"])
     t_close += s["check_passes"] * pass_time(circ, s["t_torque"])
     return t_open, t_close, D, d
 
 
-def cycle(s, runners=1, parallel=True, pattern="legacy", star_passes=TIGHTEN_STAR_PASSES):
+def cycle(s, runners=1, parallel=True, pattern="legacy", star_passes=TIGHTEN_STAR_PASSES,
+          channels=1, pipelined=False):
+    """pipelined: each flange runs its own chain (gasket -> head -> bolting on closing,
+    bolting -> head on opening) and the flanges overlap, instead of every flange waiting
+    for all flanges to finish each phase."""
     res = {}
     opens, closes = [], []
     for name, f in FLANGES.items():
-        to, tc, D, d = flange_times(f, s, runners, pattern, star_passes)
+        to, tc, D, d = flange_times(f, s, runners, pattern, star_passes, channels)
         res[name] = {"open": to, "close": tc, "D": D, "d": d}
         opens.append(to)
         closes.append(tc)
@@ -179,11 +268,16 @@ def cycle(s, runners=1, parallel=True, pattern="legacy", star_passes=TIGHTEN_STA
     bolt_close = closes.max(0) if parallel else closes.sum(0)
     n_heads = sum(1 for f in FLANGES.values() if f["head"])
     n_fl = len(FLANGES)
-    # head handling and gasket work: heads in parallel if flanges run in parallel
-    heads = s["t_head"] * (1 if parallel else n_heads)
-    gaskets = s["t_gasket"] * (1 if parallel else n_fl)
-    full_open = s["t_atmos"] + bolt_open + heads
-    full_close = gaskets + heads + bolt_close + s["t_leak"]
+    if pipelined:
+        hd = np.array([s["t_head"] if f["head"] else 0 * s["t_head"] for f in FLANGES.values()])
+        full_open = s["t_atmos"] + (opens + hd).max(0)
+        full_close = (s["t_gasket"] + hd + closes).max(0) + s["t_leak"]
+    else:
+        # phase-synchronised: every flange finishes a phase before the next begins
+        heads = s["t_head"] * (1 if parallel else n_heads)
+        gaskets = s["t_gasket"] * (1 if parallel else n_fl)
+        full_open = s["t_atmos"] + bolt_open + heads
+        full_close = gaskets + heads + bolt_close + s["t_leak"]
     res["bolting_open"], res["bolting_close"] = bolt_open, bolt_close
     res["bolting_total"] = bolt_open + bolt_close
     res["full_open"], res["full_close"] = full_open, full_close
@@ -360,6 +454,55 @@ def main():
         if name == "4 heads, parallel flanges":
             quad = c
     np.save("_mc_bolting_total.npy", np.vstack([cycle(s, **kw)["bolting_total"] for kw in configs.values()]))
+
+    # ---- throughput-optimised architecture: remove each bottleneck in turn
+    OPT = {
+        "A 4 heads, single carousel": dict(runners=4),
+        "B + 4 transfer channels": dict(runners=4, channels=4),
+        "C + 2 star passes": dict(runners=4, channels=4, star_passes=2),
+        "D + optimised sequence": dict(runners=4, channels=4, star_passes=2, pattern="optimised"),
+        "E + pipelined servicing": dict(runners=4, channels=4, star_passes=2, pattern="optimised",
+                                        pipelined=True),
+    }
+    res["optimisation"] = {}
+    opt_b, opt_f = [base["bolting_total"]], [base["full_total"]]   # one-head baseline first
+    for name, kw in OPT.items():
+        c = cycle(s, **kw)
+        opt_b.append(c["bolting_total"]); opt_f.append(c["full_total"])
+        res["optimisation"][name] = {k: pct(c[k]) for k in ("bolting_open", "bolting_close",
+                                                           "bolting_total", "full_open",
+                                                           "full_close", "full_total")}
+        for lim in (2.5, 3.0, 3.5, 4.0):
+            res["optimisation"][name]["p_bolting_le_%.1fh" % lim] = round(float(np.mean(c["bolting_total"] <= lim * 3600)), 3)
+            res["optimisation"][name]["p_full_le_%.1fh" % lim] = round(float(np.mean(c["full_total"] <= lim * 3600)), 3)
+        if name.startswith("E"):
+            e = c
+    np.save("_mc_opt.npy", np.stack([np.vstack(opt_b), np.vstack(opt_f)]))
+    # the single-head case is where sequence optimisation matters most
+    c1o = cycle(s, runners=1, pattern="optimised")
+    res["optimisation"]["1 head, optimised sequence"] = {k: pct(c1o[k]) for k in ("bolting_total", "full_total")}
+    # what the complete operation is made of in the best configuration (median seconds)
+    non_bolt = s["t_atmos"] + 2 * s["t_head"] + s["t_gasket"] + s["t_leak"]
+    res["optimisation"]["E_composition_h"] = {
+        "bolting": round(float(np.median(e["bolting_total"])) / 3600, 2),
+        "full": round(float(np.median(e["full_total"])) / 3600, 2),
+        "leak_test": round(float(np.median(s["t_leak"])) / 3600, 2),
+        "gasket": round(float(np.median(s["t_gasket"])) / 3600, 2),
+        "head_both_ways": round(float(np.median(2 * s["t_head"])) / 3600, 2),
+        "atmos": round(float(np.median(s["t_atmos"])) / 3600, 2),
+        "floor_non_bolting_min_h": round((STEP["t_atmos"][0] + 2 * STEP["t_head"][0] +
+                                          STEP["t_gasket"][0] + STEP["t_leak"][0]) / 3600, 2),
+        "non_bolting_median_h": round(float(np.median(non_bolt)) / 3600, 2)}
+    # sequence optimisation detail: travel per star pass (per unit bolt-circle diameter)
+    res["sequence_optimisation"] = {}
+    for fname, f in FLANGES.items():
+        n = f["n"]
+        q = n // 4
+        row = {"legacy_min_separation": min_separation(legacy_group_order(n), q) if q > 1 else None}
+        for r_ in (1, 4):
+            row["legacy_r%d" % r_] = round(travel_m(legacy_star(n), n, 1.0, r_)[0], 2)
+            row["optimised_r%d" % r_] = round(travel_m(optimised_star(n, r_), n, 1.0, r_)[0], 2)
+        res["sequence_optimisation"][fname] = row
 
     lo = {k: np.full(1, (v[0] if k not in ("v_carriage", "rpm_spin") else v[1]), dtype=float)
           for k, v in STEP.items()}

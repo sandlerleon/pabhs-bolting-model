@@ -124,7 +124,7 @@
    ],
    "travel_star_perD": 37.6,
    "travel_circ_perD": 3.04,
-   "travel_star_2runners_perD": 11.09,
+   "travel_star_2runners_perD": 9.33,
    "D_range_m": [
     1.22,
     3.26
@@ -151,7 +151,7 @@
    ],
    "travel_star_perD": 56.48,
    "travel_circ_perD": 3.08,
-   "travel_star_2runners_perD": 17.34,
+   "travel_star_2runners_perD": 14.6,
    "D_range_m": [
     1.83,
     4.89
@@ -174,7 +174,7 @@
    ],
    "travel_star_perD": 13.61,
    "travel_circ_perD": 2.88,
-   "travel_star_2runners_perD": 3.67,
+   "travel_star_2runners_perD": 3.14,
    "D_range_m": [
     0.34,
     0.92
@@ -337,49 +337,49 @@
   },
   "2 heads, parallel flanges": {
    "bolting_open": {
-    "p05": 0.92,
-    "median": 1.16,
-    "p95": 1.43
+    "p05": 0.9,
+    "median": 1.14,
+    "p95": 1.4
    },
    "bolting_close": {
-    "p05": 2.15,
-    "median": 2.91,
-    "p95": 3.87
+    "p05": 2.09,
+    "median": 2.84,
+    "p95": 3.79
    },
    "bolting_total": {
-    "p05": 3.16,
-    "median": 4.08,
-    "p95": 5.2
+    "p05": 3.1,
+    "median": 3.99,
+    "p95": 5.06
    },
    "full_open": {
-    "p05": 1.36,
-    "median": 1.64,
-    "p95": 1.94
+    "p05": 1.34,
+    "median": 1.62,
+    "p95": 1.91
    },
    "full_close": {
-    "p05": 3.46,
-    "median": 4.29,
-    "p95": 5.3
+    "p05": 3.41,
+    "median": 4.23,
+    "p95": 5.21
    },
    "full_total": {
-    "p05": 4.94,
-    "median": 5.94,
-    "p95": 7.11
+    "p05": 4.88,
+    "median": 5.85,
+    "p95": 6.98
    },
    "per_flange_bolting_h": {
     "top head": {
-     "p05": 2.0,
-     "median": 2.59,
-     "p95": 3.27
+     "p05": 1.97,
+     "median": 2.55,
+     "p95": 3.22
     },
     "bottom head": {
-     "p05": 3.16,
-     "median": 4.08,
-     "p95": 5.2
+     "p05": 3.1,
+     "median": 3.99,
+     "p95": 5.06
     },
     "feed inlet": {
      "p05": 0.68,
-     "median": 0.89,
+     "median": 0.88,
      "p95": 1.13
     }
    },
@@ -388,45 +388,45 @@
   },
   "4 heads, parallel flanges": {
    "bolting_open": {
-    "p05": 0.54,
+    "p05": 0.53,
     "median": 0.72,
-    "p95": 0.91
+    "p95": 0.9
    },
    "bolting_close": {
-    "p05": 1.16,
-    "median": 1.58,
-    "p95": 2.09
+    "p05": 1.14,
+    "median": 1.56,
+    "p95": 2.07
    },
    "bolting_total": {
-    "p05": 1.76,
-    "median": 2.31,
-    "p95": 2.93
+    "p05": 1.74,
+    "median": 2.28,
+    "p95": 2.9
    },
    "full_open": {
-    "p05": 0.97,
-    "median": 1.2,
-    "p95": 1.43
+    "p05": 0.96,
+    "median": 1.19,
+    "p95": 1.42
    },
    "full_close": {
-    "p05": 2.43,
-    "median": 2.96,
-    "p95": 3.55
+    "p05": 2.42,
+    "median": 2.94,
+    "p95": 3.53
    },
    "full_total": {
-    "p05": 3.49,
-    "median": 4.16,
-    "p95": 4.88
+    "p05": 3.47,
+    "median": 4.13,
+    "p95": 4.86
    },
    "per_flange_bolting_h": {
     "top head": {
      "p05": 1.15,
      "median": 1.51,
-     "p95": 1.93
+     "p95": 1.92
     },
     "bottom head": {
-     "p05": 1.76,
-     "median": 2.31,
-     "p95": 2.93
+     "p05": 1.74,
+     "median": 2.28,
+     "p95": 2.9
     },
     "feed inlet": {
      "p05": 0.41,
@@ -434,50 +434,50 @@
      "p95": 0.69
     }
    },
-   "p_bolting_le_2.5h": 0.703,
-   "p_bolting_le_1.5h": 0.005
+   "p_bolting_le_2.5h": 0.727,
+   "p_bolting_le_1.5h": 0.006
   },
   "4 heads, 2 star passes": {
    "bolting_open": {
-    "p05": 0.54,
+    "p05": 0.53,
     "median": 0.72,
-    "p95": 0.91
+    "p95": 0.9
    },
    "bolting_close": {
-    "p05": 0.98,
-    "median": 1.35,
-    "p95": 1.82
+    "p05": 0.96,
+    "median": 1.34,
+    "p95": 1.81
    },
    "bolting_total": {
-    "p05": 1.57,
-    "median": 2.08,
-    "p95": 2.66
+    "p05": 1.55,
+    "median": 2.06,
+    "p95": 2.64
    },
    "full_open": {
-    "p05": 0.97,
-    "median": 1.2,
-    "p95": 1.43
+    "p05": 0.96,
+    "median": 1.19,
+    "p95": 1.42
    },
    "full_close": {
-    "p05": 2.24,
-    "median": 2.73,
-    "p95": 3.29
+    "p05": 2.23,
+    "median": 2.72,
+    "p95": 3.27
    },
    "full_total": {
-    "p05": 3.29,
-    "median": 3.93,
-    "p95": 4.62
+    "p05": 3.28,
+    "median": 3.91,
+    "p95": 4.6
    },
    "per_flange_bolting_h": {
     "top head": {
      "p05": 1.03,
-     "median": 1.37,
+     "median": 1.36,
      "p95": 1.75
     },
     "bottom head": {
-     "p05": 1.57,
-     "median": 2.08,
-     "p95": 2.66
+     "p05": 1.55,
+     "median": 2.06,
+     "p95": 2.64
     },
     "feed inlet": {
      "p05": 0.37,
@@ -485,16 +485,263 @@
      "p95": 0.63
     }
    },
-   "p_bolting_le_2.5h": 0.886,
-   "p_bolting_le_1.5h": 0.029
+   "p_bolting_le_2.5h": 0.897,
+   "p_bolting_le_1.5h": 0.033
+  }
+ },
+ "optimisation": {
+  "A 4 heads, single carousel": {
+   "bolting_open": {
+    "p05": 0.53,
+    "median": 0.72,
+    "p95": 0.9
+   },
+   "bolting_close": {
+    "p05": 1.14,
+    "median": 1.56,
+    "p95": 2.07
+   },
+   "bolting_total": {
+    "p05": 1.74,
+    "median": 2.28,
+    "p95": 2.9
+   },
+   "full_open": {
+    "p05": 0.96,
+    "median": 1.19,
+    "p95": 1.42
+   },
+   "full_close": {
+    "p05": 2.42,
+    "median": 2.94,
+    "p95": 3.53
+   },
+   "full_total": {
+    "p05": 3.47,
+    "median": 4.13,
+    "p95": 4.86
+   },
+   "p_bolting_le_2.5h": 0.727,
+   "p_full_le_2.5h": 0.0,
+   "p_bolting_le_3.0h": 0.971,
+   "p_full_le_3.0h": 0.002,
+   "p_bolting_le_3.5h": 1.0,
+   "p_full_le_3.5h": 0.059,
+   "p_bolting_le_4.0h": 1.0,
+   "p_full_le_4.0h": 0.372
+  },
+  "B + 4 transfer channels": {
+   "bolting_open": {
+    "p05": 0.39,
+    "median": 0.49,
+    "p95": 0.6
+   },
+   "bolting_close": {
+    "p05": 0.95,
+    "median": 1.33,
+    "p95": 1.83
+   },
+   "bolting_total": {
+    "p05": 1.38,
+    "median": 1.82,
+    "p95": 2.37
+   },
+   "full_open": {
+    "p05": 0.8,
+    "median": 0.97,
+    "p95": 1.14
+   },
+   "full_close": {
+    "p05": 2.21,
+    "median": 2.71,
+    "p95": 3.28
+   },
+   "full_total": {
+    "p05": 3.09,
+    "median": 3.68,
+    "p95": 4.33
+   },
+   "p_bolting_le_2.5h": 0.98,
+   "p_full_le_2.5h": 0.0,
+   "p_bolting_le_3.0h": 1.0,
+   "p_full_le_3.0h": 0.028,
+   "p_bolting_le_3.5h": 1.0,
+   "p_full_le_3.5h": 0.31,
+   "p_bolting_le_4.0h": 1.0,
+   "p_full_le_4.0h": 0.795
+  },
+  "C + 2 star passes": {
+   "bolting_open": {
+    "p05": 0.39,
+    "median": 0.49,
+    "p95": 0.6
+   },
+   "bolting_close": {
+    "p05": 0.77,
+    "median": 1.11,
+    "p95": 1.56
+   },
+   "bolting_total": {
+    "p05": 1.21,
+    "median": 1.6,
+    "p95": 2.1
+   },
+   "full_open": {
+    "p05": 0.8,
+    "median": 0.97,
+    "p95": 1.14
+   },
+   "full_close": {
+    "p05": 2.03,
+    "median": 2.49,
+    "p95": 3.02
+   },
+   "full_total": {
+    "p05": 2.91,
+    "median": 3.46,
+    "p95": 4.08
+   },
+   "p_bolting_le_2.5h": 0.999,
+   "p_full_le_2.5h": 0.001,
+   "p_bolting_le_3.0h": 1.0,
+   "p_full_le_3.0h": 0.089,
+   "p_bolting_le_3.5h": 1.0,
+   "p_full_le_3.5h": 0.543,
+   "p_bolting_le_4.0h": 1.0,
+   "p_full_le_4.0h": 0.926
+  },
+  "D + optimised sequence": {
+   "bolting_open": {
+    "p05": 0.38,
+    "median": 0.48,
+    "p95": 0.59
+   },
+   "bolting_close": {
+    "p05": 0.76,
+    "median": 1.09,
+    "p95": 1.54
+   },
+   "bolting_total": {
+    "p05": 1.18,
+    "median": 1.57,
+    "p95": 2.07
+   },
+   "full_open": {
+    "p05": 0.79,
+    "median": 0.96,
+    "p95": 1.13
+   },
+   "full_close": {
+    "p05": 2.01,
+    "median": 2.47,
+    "p95": 3.0
+   },
+   "full_total": {
+    "p05": 2.88,
+    "median": 3.43,
+    "p95": 4.04
+   },
+   "p_bolting_le_2.5h": 0.999,
+   "p_full_le_2.5h": 0.001,
+   "p_bolting_le_3.0h": 1.0,
+   "p_full_le_3.0h": 0.103,
+   "p_bolting_le_3.5h": 1.0,
+   "p_full_le_3.5h": 0.574,
+   "p_bolting_le_4.0h": 1.0,
+   "p_full_le_4.0h": 0.937
+  },
+  "E + pipelined servicing": {
+   "bolting_open": {
+    "p05": 0.38,
+    "median": 0.48,
+    "p95": 0.59
+   },
+   "bolting_close": {
+    "p05": 0.76,
+    "median": 1.09,
+    "p95": 1.54
+   },
+   "bolting_total": {
+    "p05": 1.18,
+    "median": 1.57,
+    "p95": 2.07
+   },
+   "full_open": {
+    "p05": 0.79,
+    "median": 0.96,
+    "p95": 1.13
+   },
+   "full_close": {
+    "p05": 2.01,
+    "median": 2.47,
+    "p95": 3.0
+   },
+   "full_total": {
+    "p05": 2.88,
+    "median": 3.43,
+    "p95": 4.04
+   },
+   "p_bolting_le_2.5h": 0.999,
+   "p_full_le_2.5h": 0.001,
+   "p_bolting_le_3.0h": 1.0,
+   "p_full_le_3.0h": 0.103,
+   "p_bolting_le_3.5h": 1.0,
+   "p_full_le_3.5h": 0.574,
+   "p_bolting_le_4.0h": 1.0,
+   "p_full_le_4.0h": 0.937
+  },
+  "1 head, optimised sequence": {
+   "bolting_total": {
+    "p05": 6.06,
+    "median": 7.91,
+    "p95": 10.43
+   },
+   "full_total": {
+    "p05": 7.88,
+    "median": 9.77,
+    "p95": 12.33
+   }
+  },
+  "E_composition_h": {
+   "bolting": 1.57,
+   "full": 3.43,
+   "leak_test": 0.54,
+   "gasket": 0.46,
+   "head_both_ways": 0.75,
+   "atmos": 0.1,
+   "floor_non_bolting_min_h": 1.12,
+   "non_bolting_median_h": 1.85
+  }
+ },
+ "sequence_optimisation": {
+  "top head": {
+   "legacy_min_separation": 2,
+   "legacy_r1": 37.6,
+   "optimised_r1": 36.23,
+   "legacy_r4": 2.26,
+   "optimised_r4": 1.47
+  },
+  "bottom head": {
+   "legacy_min_separation": 2,
+   "legacy_r1": 56.48,
+   "optimised_r1": 55.04,
+   "legacy_r4": 2.68,
+   "optimised_r4": 1.51
+  },
+  "feed inlet": {
+   "legacy_min_separation": 1,
+   "legacy_r1": 13.61,
+   "optimised_r1": 12.83,
+   "legacy_r4": 0.52,
+   "optimised_r4": 0.52
   }
  },
  "best_case_bolting_h": {
   "1 head, parallel flanges": 2.96,
   "1 head, serial flanges": 5.42,
   "1 head, circular passes only": 2.42,
-  "2 heads, parallel flanges": 1.51,
-  "4 heads, parallel flanges": 0.85,
+  "2 heads, parallel flanges": 1.48,
+  "4 heads, parallel flanges": 0.84,
   "4 heads, 2 star passes": 0.76
  },
  "sensitivity_bolting_total": {
@@ -516,24 +763,24 @@
   "p_retry": -0.002
  },
  "sensitivity_bolting_total_4heads": {
-  "t_transfer": 0.542,
-  "check_passes": 0.455,
-  "t_torque": 0.416,
-  "p_operator": 0.284,
-  "t_align": 0.214,
-  "t_operator": 0.201,
-  "t_engage": 0.153,
-  "rpm_spin": -0.149,
-  "v_carriage": -0.132,
+  "t_transfer": 0.545,
+  "check_passes": 0.458,
+  "t_torque": 0.419,
+  "p_operator": 0.285,
+  "t_align": 0.216,
+  "t_operator": 0.202,
+  "t_engage": 0.154,
+  "rpm_spin": -0.15,
+  "v_carriage": -0.105,
   "t_release": 0.076,
-  "k_spacing": 0.073,
   "t_breakout": 0.066,
+  "k_spacing": 0.059,
   "t_move": 0.05,
-  "d_frac": 0.049,
+  "d_frac": 0.043,
   "p_retry": 0.042,
   "t_verify": 0.041
  },
- "carousel_share_4heads": 0.26,
+ "carousel_share_4heads": 0.263,
  "admissibility": {
   "bolt_passes_per_flange": {
    "top head": 256,
@@ -938,8 +1185,8 @@
   ]
  },
  "sequences_travel_4heads_perD": {
-  "top head": 2.45,
-  "bottom head": 3.47,
-  "feed inlet": 0.79
+  "top head": 2.26,
+  "bottom head": 2.68,
+  "feed inlet": 0.52
  }
 }
