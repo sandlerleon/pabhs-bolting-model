@@ -27,12 +27,12 @@ each target.
 | Bolting time, 1 torque head per flange | median **7.96 h**; best case 2.96 h — cannot meet 2.5 h |
 | Bolting time, 4 synchronised heads per flange (A) | median **2.28 h**; ≤ 2.5 h in 73 % of samples |
 | Rate-limiting element with 4 heads | the **carousel** (26 % of bottom-flange time) |
-| B: + one bolt-transfer channel per head — **recommended** (legacy procedure unchanged) | **1.82 h**; ≤ 2.5 h in 98 % (92 % with correlated inputs) |
+| B: + one bolt-transfer channel per head — **preferred for experimental development** (legacy procedure unchanged) | **1.82 h**; ≤ 2.5 h in 98 % (92 % with correlated inputs) |
 | C: + one fewer star pass (needs preload validation) | **1.60 h**; ≤ 2.5 h in 100 % |
 | D: + exactly optimised tool path (Held–Karp, load-spreading constraint) | 1.57 h — little gain: the opposite-bolt rule fixes most travel |
 | E: + pipelined servicing | 1.57 h — no gain: bottom head is critical in every phase |
 | Complete operation (bolting + heads + gaskets + leak test), best config | **3.43 h**; never ≤ 2.5 h — servicing steps alone are ≥ 1.12 h |
-| Ranking 1 > 2 > 4 heads > 4 heads + 4 channels | holds in 100 % of samples under uniform, triangular and correlated inputs |
+| Ranking 1 > 2 > 4 heads > 4 heads + 4 channels | held across all 20,000 simulated samples under uniform, triangular and correlated inputs |
 | Servicing envelope for a 2.5 h complete operation | ≤ 41 min (B) or 54 min (C) vs 1.85 h median assumed |
 | Time budget the 2.5 h target implies | 23 s per bolt-pass vs 75 s modelled |
 | ±2 % torque accuracy | almost no effect on preload; nut-factor scatter dominates |
@@ -71,6 +71,11 @@ python make_figures.py     # -> figures/
 python build_manuscript.py
 python audit_manuscript.py
 ```
+
+## Citation
+
+- Code and model: [10.5281/zenodo.22969548](https://doi.org/10.5281/zenodo.22969548) (release v1.0.0)
+- Manuscript preprint: [10.5281/zenodo.22969550](https://doi.org/10.5281/zenodo.22969550)
 
 ## License
 

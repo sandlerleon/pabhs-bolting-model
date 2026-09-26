@@ -87,7 +87,10 @@ P("An earlier, non-quantitative description of the architecture was submitted by
   "manuscript is original, is not under consideration elsewhere, and has not been published. "
   "I am the sole author, I have no competing interests, and the work received no external "
   "funding. The models, verification script and figure generators are openly available at "
-  "https://github.com/sandlerleon/pabhs-bolting-model. Generative AI (Claude, Anthropic) "
+  "https://github.com/sandlerleon/pabhs-bolting-model and archived at "
+  "https://doi.org/10.5281/zenodo.22969548; a preprint of the manuscript is deposited at "
+  "https://doi.org/10.5281/zenodo.22969550, as permitted by Springer's preprint policy. "
+  "Generative AI (Claude, Anthropic) "
   "assisted with literature search, model implementation and drafting; I reviewed and "
   "edited all content, verified every reference against its source, and take full "
   "responsibility for the manuscript, as stated in its Declarations.")

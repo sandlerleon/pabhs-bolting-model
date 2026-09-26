@@ -20,7 +20,7 @@ R = json.load(io.open(os.path.join(HERE, "pabhs_results.json"), encoding="utf-8"
 V = json.load(io.open(os.path.join(HERE, "plc_verify_results.json"), encoding="utf-8"))
 DOIREFS = json.load(io.open(os.path.join(HERE, "_refs.json"), encoding="utf-8"))
 REPO_URL = "https://github.com/sandlerleon/pabhs-bolting-model"
-CODE_DOI = os.environ.get("PABHS_CODE_DOI")      # set once the Zenodo deposit exists
+CODE_DOI = os.environ.get("PABHS_CODE_DOI", "10.5281/zenodo.22969548")   # reserved Zenodo DOI
 
 TITLE = ("Automated bolting and head handling for multi-flange pressure-vessel closures: "
          "a simulation-based design evaluation with a delayed-coking case study")
@@ -209,9 +209,10 @@ ABSTRACT = (
     "head per flange needs a median %.1f h to unbolt and re-bolt the drum and, within the "
     "investigated parameter bounds, cannot meet a 2.5 h target. Removing bottlenecks in turn "
     "gives %.1f h with four synchronised heads and %.1f h with a bolt-transfer channel per "
-    "head, the recommended machine-only configuration, which meets 2.5 h in %.0f%% of "
+    "head, the preferred simulated configuration, which meets 2.5 h in %.0f%% of "
     "samples; one fewer star pass would give %.1f h but requires qualification. This ranking "
-    "holds in every sample under uniform, triangular and correlated input models. An exactly "
+    "held across all 20,000 simulated samples under uniform, triangular and correlated input "
+    "models. An exactly "
     "optimised tool path adds little, and the complete operation remains about %.1f h, "
     "governed by head handling and leak testing. Specifying \u00b12%% torque accuracy barely "
     "affects preload scatter; under an assumed 3%% angle-based preload-estimate uncertainty, "
@@ -667,9 +668,11 @@ Pp("Table 5 and Fig. 6 remove the bottlenecks in turn. Giving each of the four h
    "bolt-transfer channel, for example a carousel with four access stations, cuts bolting from "
    "%.2f to %.2f h and raises the probability of meeting 2.5 h from %.2f to %.2f. This is a "
    "change to the machine alone, with the legacy tightening procedure unaltered, and it is the "
-   "configuration the analysis recommends: four heads and four transfer channels meet the "
+   "configuration the present analysis supports and recommends for experimental development: "
+   "four heads and four transfer channels meet the "
    "bolting target without any change to how the joint is assembled. Removing one star pass "
-   "brings bolting further to %.2f h, inside the target in every sample, but this is a change "
+   "brings bolting further to %.2f h, inside the target in all simulated samples, but this is a "
+   "change "
    "to the joint-assembly procedure rather than to the machine. It is an optional process "
    "improvement, admissible only if a reduced-pass procedure of the kind described as an "
    "alternative to the legacy sequence %s is shown to give equivalent preload uniformity on "
@@ -677,7 +680,7 @@ Pp("Table 5 and Fig. 6 remove the bottlenecks in turn. Giving each of the four h
    % (OA["bolting_total"]["median"], OB["bolting_total"]["median"], OA["p_bolting_le_2.5h"],
       OB["p_bolting_le_2.5h"], OC["bolting_total"]["median"], C("brown2010")))
 Pp("The exactly optimised tool path adds little, and it is reported for what it shows rather "
-   "than as part of the recommended design. With four heads it cuts carriage travel per "
+   "than as part of the preferred configuration. With four heads it cuts carriage travel per "
    "star pass on the bottom head from %.2f to %.2f bolt-circle diameters, but travel is by "
    "then a small part of the cycle and bolting falls only from %.2f to %.2f h. With one head, "
    "where travel matters, the optimum reduces travel per star pass only from %.1f to %.1f "
@@ -708,7 +711,7 @@ SE = R["servicing_envelope"]
 Pp("That observation can be turned into a performance requirement for the servicing "
    "subsystems. For a complete operation of at most 2.5 h, the servicing steps must satisfy")
 EQ_SERVICE = EQ("t_atmos + 2t_head + t_gasket + t_leak ≤ 2.5 h − T_bolting")
-Pp("With the recommended configuration B (median bolting %.2f h) the servicing budget is "
+Pp("With the preferred configuration B (median bolting %.2f h) the servicing budget is "
    "%.2f h, or %.0f min; with the optional reduced-pass configuration C (%.2f h) it is %.2f h, "
    "or %.0f min. The assumed servicing ranges give %.2f h at the median and %.2f h at best. "
    "With configuration C, a 2.5 h complete operation would need, for example, head handling "
@@ -747,11 +750,11 @@ Pp("The step-time ranges of Table 2 are assumptions, and so are the uniform dist
    "analysis under two alternatives: triangular distributions centred on the nominal value, "
    "and a pessimistic case in which those six inputs are positively correlated. The medians "
    "barely move, because the ranges are unchanged; the tails do. In the correlated case the "
-   "probability that the recommended configuration B meets 2.5 h falls from %.2f to %.2f and "
+   "probability that the preferred configuration B meets 2.5 h falls from %.2f to %.2f and "
    "its 95th percentile rises from %.2f to %.2f h, whereas under triangular distributions it "
    "rises to %.3f. What does not change is the architectural ranking: one head is slower "
    "than two, two slower than four, and four heads with a single carousel slower than four "
-   "with four transfer channels, in every one of the %d samples under all three models. The "
+   "with four transfer channels, across all %d simulated samples under all three models. The "
    "paper's central claim is that ranking, not the particular value of %.2f h."
    % (RBU[dnames[0]]["B + 4 channels"]["p_le_2.5h"], RBU[dnames[2]]["B + 4 channels"]["p_le_2.5h"],
       RBU[dnames[0]]["B + 4 channels"]["p95"], RBU[dnames[2]]["B + 4 channels"]["p95"],
@@ -868,9 +871,10 @@ Pp("Weighted by modelled duration, automation coverage is A = %.2f (Table 9). Th
    "manual procedure places four to six workers in the hazard zone for four to six hours, "
    "%d\u2013%d person-hours per operation; with the automated system the routine value is "
    "zero, rising to at most %.2f person-hours if gasket cassette loading has to be done at the "
-   "flange rather than from outside the zone. The exposure reduction is the least uncertain "
-   "benefit of the architecture: it does not depend on the step times that dominate the "
-   "cycle-time uncertainty."
+   "flange rather than from outside the zone. The exposure reduction is the benefit least "
+   "sensitive to the cycle-time modelling assumptions: it does not depend on the step times "
+   "that dominate the cycle-time uncertainty, although it remains to be demonstrated in an "
+   "integrated pilot."
    % (ex["coverage"], ex["manual_person_hours"][0], ex["manual_person_hours"][1],
       ex["pabhs_person_hours_in_zone"][1]))
 
@@ -878,7 +882,8 @@ Pp("Weighted by modelled duration, automation coverage is A = %.2f (Table 9). Th
 H("6 Discussion")
 H2("6.1 What the targets require")
 Pp("The analysis supports two of the three original targets and conditions the third. The "
-   "exposure target is met by design. The torque-accuracy target is achievable but, on its "
+   "architecture is designed to meet the exposure target, although achievement remains to be "
+   "demonstrated in the integrated pilot. The torque-accuracy target is achievable but, on its "
    "own, does not deliver the preload quality it appears to promise; what delivers it is the "
    "angle channel. The cycle-time target is not met by the architecture as first described, "
    "with one runner per flange, anywhere within the investigated parameter bounds. The %.1f h "
@@ -1007,7 +1012,7 @@ Pp("Each subsystem uses established technology \u2014 pneumatic torque multiplie
    "costed. Rather than substitute another point estimate, the revised cost per flange is "
    "structured as")
 EQ("C = C_fixed + r\u00b7C_head + c\u00b7C_channel + C_controls + C_certification")
-Pp("with r = 4 heads and c = 4 transfer channels in the recommended configuration; the "
+Pp("with r = 4 heads and c = 4 transfer channels in the preferred configuration; the "
    "coefficients \u2014 rail and structure, each torque head, each transfer channel, the "
    "controls and the hazardous-area certification of the integrated assembly \u2014 require "
    "vendor quotations and are not estimated here. A staged programme \u2014 single-station "
@@ -1024,9 +1029,11 @@ Pp("An automated architecture for opening and closing a 92-bolt, three-flange pr
    "this closure. "
    "Parallelising in stages brings bolting to %.1f h with four synchronised heads and %.1f h "
    "with a bolt-transfer channel per head. That machine-only configuration, with the legacy "
-   "tightening procedure unchanged, is the recommended design: it meets the bolting target in "
-   "%.0f%% of samples, and the ranking of architectures that leads to it holds in every "
-   "sample under uniform, triangular and correlated input models. One fewer star pass would "
+   "tightening procedure unchanged, is the configuration the present analysis supports and "
+   "recommends for experimental development: it meets the bolting target in %.0f%% of "
+   "samples, and the ranking of architectures that leads to it held across all 20,000 "
+   "simulated samples under uniform, triangular and correlated input models. One fewer star "
+   "pass would "
    "bring bolting to %.1f h but is an optional process change that requires qualification of "
    "preload uniformity. An exactly optimised tool path and pipelined servicing add little, the "
    "first because the opposite-bolt rule fixes most of the travel and the second because the "
@@ -1042,7 +1049,8 @@ Pp("An automated architecture for opening and closing a 92-bolt, three-flange pr
    "adding an explicit resume rule eliminated every deadlock while preserving all seven "
    "invariants. Pneumatic head handling requires a counterbalance carrying most of "
    "the load. The reduction in hazard-zone exposure, from %d\u2013%d person-hours to "
-   "essentially none, is the most robust benefit. These are predictions, and the validation "
+   "essentially none by design, is the benefit least sensitive to the cycle-time modelling "
+   "assumptions, though it too awaits demonstration. These are predictions, and the validation "
    "plan specifies the measurements that would confirm or overturn them."
    % (b1["bolting_total"]["median"], OA["bolting_total"]["median"], OB["bolting_total"]["median"],
       100 * OB["p_bolting_le_2.5h"], OC["bolting_total"]["median"], OE["full_total"]["median"],

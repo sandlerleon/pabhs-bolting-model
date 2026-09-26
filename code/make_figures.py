@@ -29,11 +29,14 @@ BLUE, RED, GREEN, GREY, ORANGE, PURPLE = "#1b6ca8", "#c1553b", "#3f8f4a", "#7a7a
 
 
 def save(fig, name):
+    """300 dpi PNG for embedding in the manuscript; 600 dpi TIFF for separate upload
+    (Springer's minimum for combination artwork, i.e. charts with text)."""
     png = os.path.join(OUT, name + ".png")
     fig.savefig(png, dpi=DPI, bbox_inches="tight")
+    tif = os.path.join(OUT, name + ".tif")
+    fig.savefig(tif, dpi=600, bbox_inches="tight")
     plt.close(fig)
-    Image.open(png).convert("RGB").save(os.path.join(OUT, name + ".tif"), dpi=(DPI, DPI),
-                                        compression="tiff_lzw")
+    Image.open(tif).convert("RGB").save(tif, dpi=(600, 600), compression="tiff_lzw")
     print(name)
 
 
